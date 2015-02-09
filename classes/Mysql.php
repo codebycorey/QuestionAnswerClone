@@ -4,31 +4,39 @@ require_once 'includes/constants.php';
 
 class Mysql {
 
-  private $conn;
+  function insert_Question($title, $description) {
 
-  function __construct() {
-    $this->conn = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME) or
+    $link = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME)  or
       die('There was a problem connecting to the database');
+
+    $query = "INSERT INTO question (title, body, ownerid)
+              VALUES ('$title', '$description', '1')";
+
+    if(mysqli_query($link, $query)) {
+      return true;
+      } else {
+      return false;
+      echo "ERROR: Could not able to execute $query. " . mysqli_error($link);
+    }
+
   }
 
   function verify_Username_and_Pass($un, $pwd) {
 
-    $query = "select *
-            FROM user
-            WHERE username = ? AND password = ?
+    $link = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME)  or
+      die('There was a problem connecting to the database');
+
+    $query = "select * FROM user
+            WHERE username = $un AND password = $pwd
             LIMIT 1";
 
-    if($stmt = $this->conn->prepare($query)) {
-      $stmt->bind_param('ss', $un, $pwd);
-      $stmt->execute();
-
-
-      if($stmt->fetch()) {
-        $stmt->close();
-        return true;
-      }
+    if(mysqli_query($link, $query)) {
+      return true;
+      } else {
+      return false;
+      echo "ERROR: Could not able to execute $query. " . mysqli_error($link);
     }
-}
+  }
 
 }
 
