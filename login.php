@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once 'classes/User.php';
-require_once 'includes/constants.php';
 $user = new User();
 
 // If the user clicks the "Log Out" link on the index page.
@@ -9,10 +8,10 @@ if(isset($_GET['status']) && $_GET['status'] == 'loggedout') {
   $user->log_User_Out();
 }
 
-
 // Did the user enter a username/password and click submit?
 if($_POST && !empty($_POST['username']) && !empty($_POST['password'])) {
   $response = $user->validate_User($_POST['username'], $_POST['password']);
+  $_SESSION['user_id'] = 'username';
 }
 
 

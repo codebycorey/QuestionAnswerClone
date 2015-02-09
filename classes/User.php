@@ -1,6 +1,6 @@
 <?php
 
-require 'Mysql.php';
+require_once 'Mysql.php';
 
 
 class User {
@@ -23,6 +23,11 @@ class User {
 
       if(isset($_COOKIE[session_name()]))
         setcookie(session_name(), '', time() - 1000);
+
+      // Unset all of the session variables.
+      session_unset();
+
+      // Destroy the session.
       session_destroy();
     }
   }
