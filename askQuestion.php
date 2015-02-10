@@ -7,7 +7,6 @@ $insert = New Question();
 
 if($_POST && !empty($_POST['title']) && !empty($_POST['description'])) {
   $response = $insert->question_Inserted($_POST['title'], $_POST['description']);
-  $_SESSION['user_id'] = 'username';
 } else {
   $response = "Please make sure both field are filled out";
 }
@@ -23,7 +22,7 @@ if($_POST && !empty($_POST['title']) && !empty($_POST['description'])) {
   <body>
     <p> Welcome "<?php echo $_SESSION['user_id'];?>!"
     <a href="login.php?status=loggedout">Log Out</a> </p>
-    <p><a href="index.php">home</a><p>
+    <p><a href="index.php">Home</a><p>
       <form method="post" action="">
         <div>
           <label for="title">Title</label>
