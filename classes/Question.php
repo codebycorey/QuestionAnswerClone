@@ -12,7 +12,7 @@ class Question {
 
     if($no_error) {;
       return "Record added successfully.";
-    } else return "Please fix your question";
+    } else return "Please make sure both field are filled out";
 
   }
 }

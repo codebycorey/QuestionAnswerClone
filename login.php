@@ -11,12 +11,10 @@ if(isset($_GET['status']) && $_GET['status'] == 'loggedout') {
 // Did the user enter a username/password and click submit?
 if($_POST && !empty($_POST['username']) && !empty($_POST['password'])) {
   $response = $user->validate_User($_POST['username'], $_POST['password']);
-  $_SESSION['user_id'] = 'username';
+  $_SESSION['user_id'] = $_POST['username'];
 }
 
-
 ?>
-
 
 <!DOCTYPE html>
 <html>
@@ -25,13 +23,14 @@ if($_POST && !empty($_POST['username']) && !empty($_POST['password'])) {
 
   <body>
     <div class="login">
+    <h1>Please log in to access the rest of the website</h1>
       <form method="post" action="">
         <div>
           <label for="username">Username</label>
           <input type="text" name="username" value="" id="username" placeholder="Username">
         </div>
         <div>
-          <label for="username">Password</label>
+          <label for="password">Password</label>
           <input type="text" name="password" value="" id="password" placeholder="Password">
         </div>
         <div>
