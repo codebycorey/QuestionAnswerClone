@@ -1,4 +1,5 @@
 <?php
+
 require_once 'includes/constants.php';
 require_once 'classes/User.php';
 $user = New User();
@@ -47,6 +48,35 @@ $query3 = "SELECT * FROM answer
 $result3 = $link->query($query3)
   or die($link->error);
 
+$num_answers = $result3->num_rows;
+
+$answer_Table = '';
+while($row = $result3->fetch_assoc()) {
+    $answer_id = $row['id'];
+    $answer_body = $row['body'];
+    $ansowner = retrieve_Username($link, $row['ownerid']);
+    $anscreationdate = $row['creationdate'];
+
+if($num_answers > 1) {
+$answer_Table .=<<<EOD
+    <table>
+    <tr><td><strong>Body: </strong>$answer_body</td></tr>
+    <tr><td><strong>User: </strong>$ansowner</td></tr>
+    <tr><td><strong>Date: </strong>$anscreationdate</td></tr>
+    </table>
+    <hr>
+EOD;
+} else {
+$answer_Table .=<<<EOD
+    <table>
+    <tr><td><strong>Body: </strong>$answer_body</td></tr>
+    <tr><td><strong>User: </strong>$ansowner</td></tr>
+    <tr><td><strong>Date: </strong>$anscreationdate</td></tr>
+    <table>
+EOD;
+}
+}
+
 function Insert_Answer($ans, $question_id) {
   $link = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME)  or
     die('There was a problem connecting to the database');
@@ -69,14 +99,13 @@ if($_POST && !empty($_POST['answer'])) {
   header("Location: displayQuestion.php?question_id=$question_id");
 }
 
+    $result->free();
+    $link->close();
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-
-  <link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
-
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <script src="js/script.js"></script>
   </head>
@@ -89,26 +118,9 @@ if($_POST && !empty($_POST['answer'])) {
     </p>
       <h2>Question</h2>
       <table><?php echo $question_Table?></table>
+      <hr>
       <h2>Answers</h2>
-      <?php while($row = $result3->fetch_assoc()): ?>
-        <hr>
-    <div class="item" data-postid="<?php echo $row['id'] ?>" data-score="<?php echo $row['score'] ?>">
-      <p><?php echo $row['id'] ?></p>
-      <div class="vote-span"><!-- voting-->
-        <div class="vote" data-action="up" title="Vote up">
-          <i class="icon-chevron-up"></i>
-        </div><!--vote up-->
-        <div class="vote-score"><?php echo $row['score'] ?></div>
-        <div class="vote" data-action="down" title="Vote down">
-          <i class="icon-chevron-down"></i>
-        </div><!--vote down-->
-      </div>
-
-      <div class="post"><!-- post data -->
-        <p><?php echo $row['body'] ?></p>
-      </div>
-    </div><!--item-->
-    <?php endwhile?>
+      <?php echo $answer_Table?>
       <h2>Post and answer to the Question</h2>
       <form method="post" action="">
         <div>
