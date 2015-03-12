@@ -31,12 +31,13 @@ if($_POST && !empty($_POST['username']) && !empty($_POST['password'])) {
         </div>
         <div>
           <label for="password">Password</label>
-          <input type="text" name="password" value="" id="password" placeholder="Password">
+          <input type="password" name="password" value="" id="password" placeholder="Password">
         </div>
         <div>
         <input type="submit" value="Submit">
         </div>
       </form>
+      <a href="register.php">Register</a>
       <?php if(isset($response)) echo "<h4 class='alert'>" . $response . "</h4>"; ?>
     </div>
   </body>
