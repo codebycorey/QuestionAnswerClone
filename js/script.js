@@ -15,7 +15,7 @@ $(document).ready(function(){
 	// any voting button (up/down) clicked event
 	$('.vote').click(function(){
 		var self = $(this); // cache $this
-		var action = self.data('action'); // grab action data up/down
+		var action = self.data('action'); // grab action data up/down 
 		var parent = self.parent().parent(); // grab grand parent .item
 		var postid = parent.data('postid'); // grab post id from data-postid
 		var score = parent.data('score'); // grab score form data-score
