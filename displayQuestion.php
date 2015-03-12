@@ -2,6 +2,11 @@
 session_start();
 include('config.php');
 
+if($_SESSION['status'] !='authorized') {
+  header("location: login.php");
+  die();
+}
+
 $link = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME)  or
   die('There was a problem connecting to the database');
 
@@ -47,7 +52,9 @@ $ansquery = mysqli_query($link, "
       <?php while($row = mysqli_fetch_array($query)): ?>
       <h4><?php echo "Title: " . $row['title'];?></h4>
       <p><?php echo "Body: " . $row['body'];?></p>
-      <p><?php echo "User: " . retrieve_Username($link, $row['ownerid']);?></p>
+      <p><?php $username = retrieve_Username($link, $row['ownerid']);
+               $url = 'displayUser.php?user_id=' . $row['ownerid'];
+      echo "User: <a href=$url>$username</a>" ;?></p>
       <p><?php echo "Date: " . $row['creationdate'];?></p>
       <?php endwhile?>
 
