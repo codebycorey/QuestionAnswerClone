@@ -10,7 +10,7 @@ function verify_Username_and_Pass($un, $pwd) {
 
   $query = mysqli_query($link, "
     SELECT id FROM user
-    WHERE username = '$un' AND password = '$pwd'");
+    WHERE username = '{$un}' AND password = '{$pwd}'");
 
   $numrows = mysqli_num_rows($query);
 
