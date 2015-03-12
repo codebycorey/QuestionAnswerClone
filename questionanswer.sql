@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 10, 2015 at 01:07 AM
+-- Generation Time: Mar 12, 2015 at 05:09 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -43,8 +43,8 @@ CREATE TABLE IF NOT EXISTS `answer` (
 --
 
 INSERT INTO `answer` (`id`, `parentid`, `body`, `ownerid`, `score`, `commentcount`, `creationdate`) VALUES
-(4, 1, 'Sed dapibus eu odio non laoreet. Morbi vitae maximus ligula, id scelerisque massa. Vestibulum non nisi accumsan nunc molestie rutrum ut sit amet augue. Curabitur a mi nulla. Vestibulum tempor purus neque, ut varius mi maximus et. Vestibulum sem massa, mollis vitae ante at, hendrerit tincidunt.', 6, 0, 0, '2015-02-09 22:57:12'),
-(5, 1, 'Phasellus sed diam urna. Vivamus libero lectus, hendrerit nec dui et, aliquet elementum lacus. Vivamus congue faucibus dolor, in ultricies purus cursus a. Praesent fringilla dolor risus, quis dapibus erat lacinia ut. Suspendisse leo velit, pellentesque rutrum mauris quis, consectetur varius justo.', 6, 0, 0, '2015-02-09 23:14:33'),
+(4, 1, 'Sed dapibus eu odio non laoreet. Morbi vitae maximus ligula, id scelerisque massa. Vestibulum non nisi accumsan nunc molestie rutrum ut sit amet augue. Curabitur a mi nulla. Vestibulum tempor purus neque, ut varius mi maximus et. Vestibulum sem massa, mollis vitae ante at, hendrerit tincidunt.', 6, 1, 0, '2015-02-09 22:57:12'),
+(5, 1, 'Phasellus sed diam urna. Vivamus libero lectus, hendrerit nec dui et, aliquet elementum lacus. Vivamus congue faucibus dolor, in ultricies purus cursus a. Praesent fringilla dolor risus, quis dapibus erat lacinia ut. Suspendisse leo velit, pellentesque rutrum mauris quis, consectetur varius justo.', 6, 1, 0, '2015-02-09 23:14:33'),
 (9, 2, 'Duis nec dignissim sem. Pellentesque non aliquet neque. Pellentesque sed luctus ipsum. Suspendisse vitae condimentum arcu. Etiam lacinia placerat fermentum. Ut congue risus libero, vitae molestie tortor scelerisque et.', 6, 0, 0, '2015-02-09 23:36:39'),
 (10, 9, 'Phasellus sed diam urna. Vivamus libero lectus, hendrerit nec dui et, aliquet elementum lacus. Vivamus congue faucibus dolor, in ultricies purus cursus a. Praesent fringilla dolor risus, quis dapibus erat lacinia ut. Suspendisse leo velit, pellentesque rutrum mauris quis, consectetur varius justo. Etiam viverra sapien eu augue efficitur eleifend. Nam ac leo ac quam semper vehicula. Proin tortor urna, vestibulum eu dolor vitae, tristique suscipit lorem. Vestibulum vitae enim a nibh fringilla suscipit.', 6, 0, 0, '2015-02-09 23:40:38');
 
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `question` (
   `answercount` int(11) NOT NULL,
   `commentcount` int(11) NOT NULL,
   `creationdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `question`
@@ -74,8 +74,7 @@ CREATE TABLE IF NOT EXISTS `question` (
 INSERT INTO `question` (`id`, `title`, `body`, `ownerid`, `correctanswer`, `score`, `viewcount`, `answercount`, `commentcount`, `creationdate`) VALUES
 (1, 'Test Question one', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin at viverra elit. Fusce ornare felis turpis, in efficitur mi pellentesque a. Cras ornare non sapien eget porta. Proin sed laoreet ipsum, non interdum tortor. Nunc tortor ex, accumsan vitae lectus sit amet, euismod lobortis felis. Morbi massa libero, semper vel velit quis, vehicula lacinia lorem. Vestibulum et orci pretium, vestibulum lacus quis, cursus ante. Pellentesque finibus semper magna eget suscipit. Fusce pretium purus nec ligula aliquam ullamcorper. Sed in risus id augue malesuada fermentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', 3, 0, 0, 0, 0, 0, '2015-02-09 03:31:03'),
 (2, 'Test Question 2', 'Nunc sed egestas nibh. In risus leo, vehicula ac maximus sed, lacinia at urna. Duis eleifend nulla id ipsum mattis rhoncus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse purus purus, pulvinar vel vulputate non, lacinia eu tortor. Cras condimentum malesuada ante, ac dignissim libero pharetra ut. Vestibulum pharetra cursus tortor eu mattis. Praesent sit amet dignissim ex. Morbi eget fermentum elit. In vel massa congue, semper tellus in, dapibus lorem. Nulla facilisi. Curabitur tempor ex in nunc dignissim, quis feugiat felis mollis. Suspendisse sodales finibus turpis, id vehicula nunc aliquam eu. Donec vitae vestibulum ligula. Nam gravida nisi non bibendum viverra.', 2, 0, 0, 0, 0, 0, '2015-02-09 03:32:27'),
-(9, 'Test Question 3', 'There is going to be a small body but hopefully makes it look like there is a problem', 6, 0, 0, 0, 0, 0, '2015-02-09 07:38:30'),
-(13, '', '', 6, 0, 0, 0, 0, 0, '2015-02-09 22:53:06');
+(9, 'Test Question 3', 'There is going to be a small body but hopefully makes it look like there is a problem', 6, 0, 0, 0, 0, 0, '2015-02-09 07:38:30');
 
 -- --------------------------------------------------------
 
@@ -90,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `displayname` varchar(24) NOT NULL,
   `aboutme` varchar(280) NOT NULL,
   `creationdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
@@ -133,7 +132,7 @@ ALTER TABLE `question`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
- ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `username` (`username`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -148,12 +147,12 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 -- AUTO_INCREMENT for table `question`
 --
 ALTER TABLE `question`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
