@@ -7,9 +7,10 @@ dbConnect();
 
 
 function verify_Username_and_Pass($un, $pwd) {
+
   $query = mysql_query("
     SELECT id FROM user
-    WHERE username = $un AND password = $pwd");
+    WHERE username = '$un' AND password = '$pwd'");
 
   $numrows = mysql_num_rows($query);
 
