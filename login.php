@@ -13,7 +13,7 @@ function verify_Username_and_Pass($un, $pwd) {
     WHERE username = '$un' AND password = '$pwd'");
 
   $numrows = mysql_num_rows($query);
-
+return $numrows;
   if($numrows === 1) {
     while($row = mysql_fetch_assoc($query)) {
       $_SESSION['user_key'] = $row['id'];
@@ -26,7 +26,7 @@ function verify_Username_and_Pass($un, $pwd) {
 
 function validate_User($un, $pwd) {
   $ensure_credentials = verify_Username_and_Pass($un, $pwd);
-
+return $ensure_credentials;
   if($ensure_credentials) {
     $_SESSION['status'] = 'authorized';
     header("location: index.php");
