@@ -13,9 +13,8 @@ function verify_Username_and_Pass($un, $pwd) {
     WHERE username = '$un' AND password = '$pwd'");
 
   $numrows = mysql_num_rows($query);
-  echo $numrows;
 
-  if($numrows != 0) {
+  if($numrows === 1) {
     while($row = mysql_fetch_assoc($query)) {
       $_SESSION['user_key'] = $row['id'];
       return true;
