@@ -1,8 +1,8 @@
 <?php
-# db configuration 
+# db configuration
 define('DB_HOST',		'locahost');
-define('DB_USER',		'root');
-define('DB_PASS',		'root');
+define('DB_USER',		'admin');
+define('DB_PASS',		'5pR1nG2OlS');
 define('DB_NAME',		'mydb');
 
 # db connect
