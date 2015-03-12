@@ -2,26 +2,28 @@
 session_start();
 
 include('config.php');
-dbConnect();
-
-
 
 function verify_Username_and_Pass($un, $pwd) {
 
-  $query = mysql_query("
+  $link = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME)
+    or die('Could not connect to MySQL DB ') . mysql_error();
+
+  $query = mysqli_query($link, "
     SELECT id FROM user
     WHERE username = '$un' AND password = '$pwd'");
 
-  $numrows = mysql_num_rows($query);
+  $numrows = mysqli_num_rows($query);
 
   if($numrows === 1) {
-    while($row = mysql_fetch_assoc($query)) {
+    while($row = mysqli_fetch_assoc($query)) {
       $_SESSION['user_key'] = $row['id'];
       return true;
     }
   } else {
     return false;
   }
+
+  mysqli_close($link);
 }
 
 function validate_User($un, $pwd) {
