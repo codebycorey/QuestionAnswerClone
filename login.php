@@ -49,6 +49,29 @@ function log_User_Out() {
   }
 }
 
+$link = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME)
+    or die('Could not connect to MySQL DB ') . mysql_error();
+
+$query2 = "SELECT id, title
+          FROM question";
+
+$result2 = $link->query($query2)
+  or die($link->error);
+
+$num_questions = $result2->num_rows;
+
+$question_Table = '';
+  while($row = $result2->fetch_assoc()) {
+    $question_id = $row['id'];
+    $question_title = $row['title'];
+
+  $question_Table .=<<<EOD
+  <tr>
+    <td><a href="displayQuestion.php?question_id=$question_id">$question_title</a></td>
+  </tr>
+EOD;
+    }
+
 
 // If the user clicks the "Log Out" link on the index page.
 if(isset($_GET['status']) && $_GET['status'] == 'loggedout') {
@@ -88,6 +111,7 @@ if($_POST && !empty($_POST['username']) && !empty($_POST['password'])) {
       </form>
       <a href="register.php">Register</a>
       <?php if(isset($response)) echo "<h4 class='alert'>" . $response . "</h4>"; ?>
+      <?php echo $question_Table?>
     </div>
   </body>
 </html>
