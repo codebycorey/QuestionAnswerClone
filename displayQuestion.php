@@ -39,7 +39,7 @@ $ansquery = mysqli_query($link, "
 <head>
 
   <link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
-
+  <link href="css/style.css" rel="stylesheet">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <script src="js/votescript.js"></script>
   </head>
@@ -75,7 +75,10 @@ $ansquery = mysqli_query($link, "
 
       <div class="post"><!-- post data -->
         <p><?php echo $row['body'] ?></p>
-        <p><?php echo retrieve_Username($link, $row['ownerid']); ?></p>
+        <p><?php $username = retrieve_Username($link, $row['ownerid']);
+            $url = 'displayUser.php?user_id=' . $row['ownerid'];
+            echo "User: <a href=$url>$username</a>" ;?></p>
+        <p><?php echo $row['creationdate'] ?></p>
       </div>
     </div><!--item-->
     <?php endwhile?>

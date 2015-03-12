@@ -67,8 +67,11 @@ if($_POST && !empty($_POST['username']) && !empty($_POST['password'])) {
 
 <!DOCTYPE html>
 <html>
-  <head>
-  </head>
+<head>
+
+  <link href="css/style.css" rel="stylesheet">
+
+</head>
 
   <body>
     <div class="login">
