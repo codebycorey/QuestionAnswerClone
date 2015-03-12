@@ -17,8 +17,9 @@ $query = mysqli_query($link, "
 
 <!DOCTYPE html>
 <html>
-  <head>
-  </head>
+<head>
+  <link href="css/style.css" rel="stylesheet">
+</head>
 
   <body>
     <p> Welcome "<?php echo $_SESSION['user_id'];?>!"
