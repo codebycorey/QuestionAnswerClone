@@ -9,7 +9,7 @@ class User {
       die('There was a problem connecting to the database');
 
     $query = "SELECT id FROM user
-              WHERE username = '$un' AND password = '$pwd'";
+              WHERE username = $un AND password = $pwd";
 
     $result = $link->query($query)
       or die($link->error);
