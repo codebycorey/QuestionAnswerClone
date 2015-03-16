@@ -68,8 +68,11 @@ if($_POST && !empty($_POST['username']) && !empty($_POST['password'])) {
 <!DOCTYPE html>
 <html>
 <head>
+    <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/css/materialize.min.css">
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/js/materialize.min.js"></script>
 
-  <link href="css/style.css" rel="stylesheet">
 
 </head>
 

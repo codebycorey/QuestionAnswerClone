@@ -17,11 +17,18 @@ $(document).ready(function(){
     var self = $(this); // cache $this
     var action = self.data('action'); // grab action data up/down
     var parent = self.parent().parent(); // grab grand parent .item
-    var postid = parent.data('data-postid'); // grab post id from data-postid
+    var testpostid = parent.data('postid'); // grab post id from data-postid
     var score = parent.data('score'); // grab score form data-score
+    var ownerid = parent.data('owner');
+    var userid = parent.data('user');
+    var quesid = parent.data('quesid');
 
+    console.log(ownerid);
     // only works where is no disabled class
     if (!parent.hasClass('.disabled')) {
+      if (action == 'answer') {
+
+      }
       // vote up action
       if (action == 'up') {
         // increase vote score and color to orange
@@ -29,7 +36,7 @@ $(document).ready(function(){
         // change vote up button color to orange
         self.css({'color':'orange'});
         // send ajax request with post id & action
-        $.ajax({data: {'postid' : postid, 'action' : 'up'}});
+        $.ajax({data: {'postid' : testpostid, 'action' : 'up'}}).done(function(resp){console.log(resp);});
       }
       // voting down action
       else if (action == 'down'){
@@ -38,7 +45,12 @@ $(document).ready(function(){
         // change vote up button color to red
         self.css({'color':'red'});
         // send ajax request
-        $.ajax({data: {'postid' : postid, 'action' : 'down'}});
+        $.ajax({data: {'postid' : testpostid, 'action' : 'down'}});
+      }
+      // Accept answer action
+      else if(action == 'accept' && ownerid == userid){
+        self.css({'color':'green'});
+        $.ajax({data: {'postid' : testpostid, 'action' : 'accept', 'quesid' : quesid}}).done(function(resp){console.log(resp);});
       };
 
       // add disabled class with .item
