@@ -8,15 +8,26 @@ include('config.php');
 # start new session
 session_start();
     $postId = $_POST['postid'];
+    $quesId = $_POST['quesid'];
+    echo $_POST['postid'];
+    echo $_POST['postid'];
     # check if already voted, if found voted then return
    // if (isset($_SESSION['vote'][$postId])) return;
     # connect mysql db
     $link = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME)  or
       die('There was a problem connecting to the database');
     # query into db table to know current voting score
+
+  if($_POST['action'] === 'accept'){
+    $query = mysqli_query($link, "
+      UPDATE question
+      SET correctanswer = '{$postId}'
+      WHERE id = '{$quesId}'");
+  } else {
+
     $query = mysqli_query($link, "
       SELECT score
-      from answer
+      FROM answer
       WHERE id = '{$postId}'
       LIMIT 1");
 
@@ -32,11 +43,12 @@ session_start();
       mysqli_query($link, "
         UPDATE answer
         SET score = '{$score}'
-        WHERE id = '{$postID}' ");
+        WHERE id = '{$postId}' ");
 
       # set session with post id as true
       $_SESSION['vote'][$postId] = true;
       # close db connection
       mysqli_close($link);
     }
+  }
 ?>

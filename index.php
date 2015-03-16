@@ -18,7 +18,11 @@ $query = mysqli_query($link, "
 <!DOCTYPE html>
 <html>
 <head>
-  <link href="css/style.css" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/css/materialize.min.css">
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/js/materialize.min.js"></script>
+
 </head>
 
   <body>
