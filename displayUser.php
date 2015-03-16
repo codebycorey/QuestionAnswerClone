@@ -24,18 +24,37 @@ $quesquery = mysqli_query($link, "
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/css/materialize.min.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/js/materialize.min.js"></script>
 
 </head>
 
 <body>
-    <p> Welcome "<?php echo $_SESSION['user_id'];?>!"
-    <a href="login.php?status=loggedout">Log Out</a> </p>
-    <p><a href="index.php">Home</a></p>
+  <nav class="lighten-1" role="navigation">
+    <div class="container">
+      <div class="nav-wrapper"><a id="logo-container" href="#" class="brand-logo">Welcome "<?php echo $_SESSION['user_id'];?>!"</a>
+        <ul class="right">
+          <li><a href="login.php?status=loggedout">Log Out</a></li>
+        </ul>
+        <ul class="right">
+          <li><a href="askQuestion.php">Ask a question</a></li>
+        </ul>
+        <ul class="right">
+          <li><a href="index.php">Home</a></li>
+        </ul>
+
+        <ul id="nav-mobile" class="side-nav">
+          <li><a href="#">Navbar Link</a></li>
+        </ul>
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
     <h2>User</h2>
       <?php while($row = mysqli_fetch_array($query)): ?>
       <h4><?php echo "Username: " . $row['username'];?></h4>
@@ -60,5 +79,6 @@ $quesquery = mysqli_query($link, "
       </div>
     <?php endwhile?>
     <?php mysqli_close($link);?>
+  </div>
 </body>
 </html>

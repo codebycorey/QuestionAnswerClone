@@ -68,16 +68,16 @@ if($_POST && !empty($_POST['username']) && !empty($_POST['password'])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- Compiled and minified CSS -->
+      <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/css/materialize.min.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/js/materialize.min.js"></script>
 
-
 </head>
 
-  <body>
-    <div class="login">
+<body>
+    <div class="container">
     <h1>Please log in to access the rest of the website</h1>
       <form method="post" action="">
         <div>
@@ -95,5 +95,5 @@ if($_POST && !empty($_POST['username']) && !empty($_POST['password'])) {
       <a href="register.php">Register</a>
       <?php if(isset($response)) echo "<h4 class='alert'>" . $response . "</h4>"; ?>
     </div>
-  </body>
+</body>
 </html>

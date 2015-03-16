@@ -11,18 +11,33 @@ $link = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME)  or
   die('There was a problem connecting to the database');
 
 $query = mysqli_query($link, "
-  SELECT id, title, score
-  FROM question
-  ORDER BY score DESC
-  LIMIT 5");
+  SELECT id, title
+  FROM question");
+
+function insert_Question($title, $description) {
+  $ownerID = $_SESSION['user_key'];
+  $query = mysqli_query($linl, "
+    INSERT INTO question (title, body, ownerid)
+    VALUES ('{$title}', '{$description}', '{$ownerID}') ");
+}
+
+
+
+if($_POST && !empty($_POST['title']) && !empty($_POST['description'])) {
+  insert_Question($_POST['title'], $_POST['description']);
+} else {
+  $response = "Please make sure both field are filled out";
+}
+
+
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
       <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/css/materialize.min.css">
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/js/materialize.min.js"></script>
 
@@ -51,16 +66,18 @@ $query = mysqli_query($link, "
   </nav>
 
   <div class="container">
-    <h2>List of Questions</h2>
-    <?php while($row = mysqli_fetch_array($query)): ?>
-      <div class="question">
-        <p><?php
-        $url = 'displayQuestion.php?question_id=' . $row['id'];
-        $site_title = $row['title'];
-        echo "<a href=$url><em>Rating: </em>".$row['score']." <em>Title: </em>$site_title</a>" ?></p>
-      </div>
-    <?php endwhile?>
-    <?php mysqli_close($link); ?>
+      <form method="post" action="">
+        <div>
+          <input type="text" name="title" value="" id="title" placeholder="Title">
+        </div>
+        <div>
+          <textarea type="text" name="description" value="" id="description" placeholder="description"></textarea>
+        </div>
+        <div>
+        <input type="submit" value="Submit">
+        </div>
+      </form>
+      <?php if(isset($response)) echo "<h4 class='alert'>" . $response . "</h4>"; ?>
   </div>
 </body>
 </html>
