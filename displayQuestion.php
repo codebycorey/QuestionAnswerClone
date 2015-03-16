@@ -39,6 +39,22 @@ function Insert_Answer($ans, $question_id, $link) {
     VALUES ('$question_id', '$ans', '$ownerID')");
 }
 
+function avatar_src($link, $ownerid) {
+  $query = mysqli_query($link, "
+    SELECT avatar.filename
+    FROM avatar
+    LEFT JOIN user ON user.avatar_id = avatar.id
+    WHERE user.id = '{$ownerid}' ");
+
+  while($row = mysqli_fetch_array($query)){
+    $imgname = $row['filename'];
+  }
+
+  $src = "avatars/".$imgname;
+  echo $src;
+  return $src;
+}
+
 if($_POST && !empty($_POST['answer'])) {
   $response = Insert_Answer($_POST['answer'], $_GET['question_id'], $link);
   header("Location: displayQuestion.php?question_id=$question_id");
@@ -59,11 +75,27 @@ if($_POST && !empty($_POST['answer'])) {
   </head>
 
 <body>
-    <nav>
-      <p> Welcome "<?php echo $_SESSION['user_id'];?>!"
-      <a href="login.php?status=loggedout">Log Out</a> </p>
-      <p><a href="index.php">Home</a></p>
-    </nav>
+  <nav class="lighten-1" role="navigation">
+    <div class="container">
+      <div class="nav-wrapper"><a id="logo-container" href="#" class="brand-logo">Welcome "<?php echo $_SESSION['user_id'];?>!"</a>
+        <ul class="right">
+          <li><a href="login.php?status=loggedout">Log Out</a></li>
+        </ul>
+        <ul class="right">
+          <li><a href="askQuestion.php">Ask a question</a></li>
+        </ul>
+        <ul class="right">
+          <li><a href="index.php">Home</a></li>
+        </ul>
+
+        <ul id="nav-mobile" class="side-nav">
+          <li><a href="#">Navbar Link</a></li>
+        </ul>
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+      </div>
+    </div>
+  </nav>
+
     <div class="container">
     <h2>Question</h2>
       <?php while($row = mysqli_fetch_array($query)): ?>
@@ -88,6 +120,7 @@ if($_POST && !empty($_POST['answer'])) {
                $username = retrieve_Username($link, $owner);
                $url = 'displayUser.php?user_id=' . $row['ownerid'];
                echo "User: <a href=$url>$username</a>" ;?></p>
+      <img src="<?php avatar_src($link, $row['ownerid']);?>">
       <p><?php echo "Date: " . $row['creationdate'];?></p>
       </div>
     </div><!--item-->
@@ -124,6 +157,8 @@ if($_POST && !empty($_POST['answer'])) {
         <p><?php $username = retrieve_Username($link, $row['ownerid']);
             $url = 'displayUser.php?user_id=' . $row['ownerid'];
             echo "User: <a href=$url>$username</a>" ;?></p>
+        <img src="<?php avatar_src($link, $row['ownerid']);?>">
+
         <p><?php echo $row['creationdate'] ?></p>
       </div>
     </div><!--item-->
