@@ -31,7 +31,7 @@ $query = mysqli_query($link, "
 <body>
   <nav class="lighten-1" role="navigation">
     <div class="container">
-      <div class="nav-wrapper"><a id="logo-container" href="#" class="brand-logo">Welcome "<?php echo $_SESSION['user_id'];?>!"</a>
+      <div class="nav-wrapper"><a id="logo-container" href="<?php echo 'displayUser.php?user_id=' . $_SESSION['user_key'] ?>" class="brand-logo">Welcome "<?php echo $_SESSION['user_id'];?>!"</a>
         <ul class="right">
           <li><a href="login.php?status=loggedout">Log Out</a></li>
         </ul>
