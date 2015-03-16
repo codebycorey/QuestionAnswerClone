@@ -138,7 +138,7 @@ if($_POST && !empty($_POST['answer'])) {
         <hr>
     <div class="item" data-postid="<?php echo $row['id'] ?>" data-score="<?php echo $row['score'] ?>"
       data-owner="<?php echo $owner ?>" data-user="<?php echo $_SESSION['user_key'] ?>"
-      data-quesid="<?php echo $question_id ?>">
+      data-quesid="<?php echo $question_id ?>" data-ansid="<?php echo $answerid?>">
       <div class="vote-span"><!-- voting-->
         <div class="vote" data-action="up" title="Vote up">
           <i class="fa fa-chevron-up"></i>
