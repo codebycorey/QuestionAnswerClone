@@ -63,7 +63,7 @@ $quesquery = mysqli_query($link, "
       <?php endwhile?>
     <?php if($_SESSION['user_key'] === $_GET['user_id']): ?>
       <h4>Upload new avatar</h4>
-      <form enctype="multipart/form-data" action="fileUpload.php" method="post">
+      <form enctype="multipart/form-data" action="fileupload.php" method="post">
       <input type="hidden" name="MAX_FILE_SIZE" value="30000">
       File: <input name="userfile" type="file">
       <input type="submit" value="Upload!">
