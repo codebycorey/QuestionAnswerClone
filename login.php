@@ -81,11 +81,9 @@ if($_POST && !empty($_POST['username']) && !empty($_POST['password'])) {
     <h1>Please log in to access the rest of the website</h1>
       <form method="post" action="">
         <div>
-          <label for="username">Username</label>
           <input type="text" name="username" value="" id="username" placeholder="Username">
         </div>
         <div>
-          <label for="password">Password</label>
           <input type="password" name="password" value="" id="password" placeholder="Password">
         </div>
         <div>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 12, 2015 at 05:22 AM
+-- Generation Time: Mar 16, 2015 at 05:44 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -36,17 +36,43 @@ CREATE TABLE IF NOT EXISTS `answer` (
   `score` int(11) NOT NULL,
   `commentcount` int(11) NOT NULL,
   `creationdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `answer`
 --
 
 INSERT INTO `answer` (`id`, `parentid`, `body`, `ownerid`, `score`, `commentcount`, `creationdate`) VALUES
-(4, 1, 'Sed dapibus eu odio non laoreet. Morbi vitae maximus ligula, id scelerisque massa. Vestibulum non nisi accumsan nunc molestie rutrum ut sit amet augue. Curabitur a mi nulla. Vestibulum tempor purus neque, ut varius mi maximus et. Vestibulum sem massa, mollis vitae ante at, hendrerit tincidunt.', 6, 1, 0, '2015-02-09 22:57:12'),
-(5, 1, 'Phasellus sed diam urna. Vivamus libero lectus, hendrerit nec dui et, aliquet elementum lacus. Vivamus congue faucibus dolor, in ultricies purus cursus a. Praesent fringilla dolor risus, quis dapibus erat lacinia ut. Suspendisse leo velit, pellentesque rutrum mauris quis, consectetur varius justo.', 6, 1, 0, '2015-02-09 23:14:33'),
-(9, 2, 'Duis nec dignissim sem. Pellentesque non aliquet neque. Pellentesque sed luctus ipsum. Suspendisse vitae condimentum arcu. Etiam lacinia placerat fermentum. Ut congue risus libero, vitae molestie tortor scelerisque et.', 6, 0, 0, '2015-02-09 23:36:39'),
-(10, 9, 'Phasellus sed diam urna. Vivamus libero lectus, hendrerit nec dui et, aliquet elementum lacus. Vivamus congue faucibus dolor, in ultricies purus cursus a. Praesent fringilla dolor risus, quis dapibus erat lacinia ut. Suspendisse leo velit, pellentesque rutrum mauris quis, consectetur varius justo. Etiam viverra sapien eu augue efficitur eleifend. Nam ac leo ac quam semper vehicula. Proin tortor urna, vestibulum eu dolor vitae, tristique suscipit lorem. Vestibulum vitae enim a nibh fringilla suscipit.', 6, 0, 0, '2015-02-09 23:40:38');
+(4, 1, 'Sed dapibus eu odio non laoreet. Morbi vitae maximus ligula, id scelerisque massa. Vestibulum non nisi accumsan nunc molestie rutrum ut sit amet augue. Curabitur a mi nulla. Vestibulum tempor purus neque, ut varius mi maximus et. Vestibulum sem massa, mollis vitae ante at, hendrerit tincidunt.', 6, 2, 0, '2015-02-09 22:57:12'),
+(5, 1, 'Phasellus sed diam urna. Vivamus libero lectus, hendrerit nec dui et, aliquet elementum lacus. Vivamus congue faucibus dolor, in ultricies purus cursus a. Praesent fringilla dolor risus, quis dapibus erat lacinia ut. Suspendisse leo velit, pellentesque rutrum mauris quis, consectetur varius justo.', 6, 4, 0, '2015-02-09 23:14:33'),
+(9, 2, 'Duis nec dignissim sem. Pellentesque non aliquet neque. Pellentesque sed luctus ipsum. Suspendisse vitae condimentum arcu. Etiam lacinia placerat fermentum. Ut congue risus libero, vitae molestie tortor scelerisque et.', 6, 1, 0, '2015-02-09 23:36:39'),
+(10, 9, 'Phasellus sed diam urna. Vivamus libero lectus, hendrerit nec dui et, aliquet elementum lacus. Vivamus congue faucibus dolor, in ultricies purus cursus a. Praesent fringilla dolor risus, quis dapibus erat lacinia ut. Suspendisse leo velit, pellentesque rutrum mauris quis, consectetur varius justo. Etiam viverra sapien eu augue efficitur eleifend. Nam ac leo ac quam semper vehicula. Proin tortor urna, vestibulum eu dolor vitae, tristique suscipit lorem. Vestibulum vitae enim a nibh fringilla suscipit.', 6, 0, 0, '2015-02-09 23:40:38'),
+(11, 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras nec aliquet lectus, sed aliquam urna. Cras suscipit odio ut ultricies rhoncus. Nulla vestibulum semper malesuada. Nunc porttitor tortor nec fringilla blandit. Nullam interdum tellus enim, eu maximus turpis vulputate et. ', 4, 6, 0, '2015-03-15 22:27:49');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `avatar`
+--
+
+CREATE TABLE IF NOT EXISTS `avatar` (
+`id` int(11) NOT NULL,
+  `filename` varchar(255) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `avatar`
+--
+
+INSERT INTO `avatar` (`id`, `filename`) VALUES
+(0, 'default.jpg'),
+(2, 'Coupon_11.png'),
+(3, 'Coupon_12.png'),
+(4, 'Coupon_13.png'),
+(5, 'Coupon_14.png'),
+(6, 'Coupon_15.png'),
+(7, 'Coupon.png'),
+(8, 'default_0.jpg');
 
 -- --------------------------------------------------------
 
@@ -72,9 +98,9 @@ CREATE TABLE IF NOT EXISTS `question` (
 --
 
 INSERT INTO `question` (`id`, `title`, `body`, `ownerid`, `correctanswer`, `score`, `viewcount`, `answercount`, `commentcount`, `creationdate`) VALUES
-(1, 'Test Question one', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin at viverra elit. Fusce ornare felis turpis, in efficitur mi pellentesque a. Cras ornare non sapien eget porta. Proin sed laoreet ipsum, non interdum tortor. Nunc tortor ex, accumsan vitae lectus sit amet, euismod lobortis felis. Morbi massa libero, semper vel velit quis, vehicula lacinia lorem. Vestibulum et orci pretium, vestibulum lacus quis, cursus ante. Pellentesque finibus semper magna eget suscipit. Fusce pretium purus nec ligula aliquam ullamcorper. Sed in risus id augue malesuada fermentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', 3, 0, 0, 0, 0, 0, '2015-02-09 03:31:03'),
-(2, 'Test Question 2', 'Nunc sed egestas nibh. In risus leo, vehicula ac maximus sed, lacinia at urna. Duis eleifend nulla id ipsum mattis rhoncus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse purus purus, pulvinar vel vulputate non, lacinia eu tortor. Cras condimentum malesuada ante, ac dignissim libero pharetra ut. Vestibulum pharetra cursus tortor eu mattis. Praesent sit amet dignissim ex. Morbi eget fermentum elit. In vel massa congue, semper tellus in, dapibus lorem. Nulla facilisi. Curabitur tempor ex in nunc dignissim, quis feugiat felis mollis. Suspendisse sodales finibus turpis, id vehicula nunc aliquam eu. Donec vitae vestibulum ligula. Nam gravida nisi non bibendum viverra.', 2, 0, 0, 0, 0, 0, '2015-02-09 03:32:27'),
-(9, 'Test Question 3', 'There is going to be a small body but hopefully makes it look like there is a problem', 6, 0, 0, 0, 0, 0, '2015-02-09 07:38:30');
+(1, 'Test Question one', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin at viverra elit. Fusce ornare felis turpis, in efficitur mi pellentesque a. Cras ornare non sapien eget porta. Proin sed laoreet ipsum, non interdum tortor. Nunc tortor ex, accumsan vitae lectus sit amet, euismod lobortis felis. Morbi massa libero, semper vel velit quis, vehicula lacinia lorem. Vestibulum et orci pretium, vestibulum lacus quis, cursus ante. Pellentesque finibus semper magna eget suscipit. Fusce pretium purus nec ligula aliquam ullamcorper. Sed in risus id augue malesuada fermentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', 3, 11, 505, 0, 0, 0, '2015-02-09 03:31:03'),
+(2, 'Test Question 2', 'Nunc sed egestas nibh. In risus leo, vehicula ac maximus sed, lacinia at urna. Duis eleifend nulla id ipsum mattis rhoncus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse purus purus, pulvinar vel vulputate non, lacinia eu tortor. Cras condimentum malesuada ante, ac dignissim libero pharetra ut. Vestibulum pharetra cursus tortor eu mattis. Praesent sit amet dignissim ex. Morbi eget fermentum elit. In vel massa congue, semper tellus in, dapibus lorem. Nulla facilisi. Curabitur tempor ex in nunc dignissim, quis feugiat felis mollis. Suspendisse sodales finibus turpis, id vehicula nunc aliquam eu. Donec vitae vestibulum ligula. Nam gravida nisi non bibendum viverra.', 2, 0, 100, 0, 0, 0, '2015-02-09 03:32:27'),
+(9, 'Test Question 3', 'There is going to be a small body but hopefully makes it look like there is a problem', 6, 0, 604, 0, 0, 0, '2015-02-09 07:38:30');
 
 -- --------------------------------------------------------
 
@@ -88,30 +114,32 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` varchar(24) NOT NULL,
   `displayname` varchar(24) NOT NULL,
   `aboutme` varchar(280) NOT NULL,
-  `creationdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+  `creationdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `avatar_id` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `password`, `displayname`, `aboutme`, `creationdate`) VALUES
-(2, 'pallen', 'm$ftw', '', '', '2015-02-09 02:46:10'),
-(3, 'tblee', '0mGth3WeB!', '', '', '2015-02-09 02:46:10'),
-(4, 'bourne', 'bash_$', '', '', '2015-02-09 02:46:10'),
-(5, 'edsger', 'st1ll1l11lG0O2', '', '', '2015-02-09 02:46:10'),
-(6, 'wgates', '5il3M4X_m$4L', '', '', '2015-02-09 02:46:10'),
-(7, 'hopper', 'im4usn', '', '', '2015-02-09 02:46:10'),
-(8, 'dknuth', 'tek!tex', '', '', '2015-02-09 02:46:10'),
-(9, 'ada', 'wtf15b4b', '', '', '2015-02-09 02:46:10'),
-(10, 'cmoore', 'moreM00R3!', '', '', '2015-02-09 02:46:10'),
-(11, 'jresig', 'In0JS', '', '', '2015-02-09 02:46:10'),
-(12, 'atanen', 'minix!minix', '', '', '2015-02-09 02:46:10'),
-(13, 'linus', 'ilUvP3nGu1n5', '', '', '2015-02-09 02:46:10'),
-(14, 'aturing', '1nfin1t3TAp3', '', '', '2015-02-09 02:46:10'),
-(15, 'lwall', 'oysters&camels', '', '', '2015-02-09 02:46:10'),
-(16, 'thewoz', '4daK1d5', '', '', '2015-02-09 02:46:10'),
-(21, 'username', 'asdf', '', '', '2015-03-12 04:12:30');
+INSERT INTO `user` (`id`, `username`, `password`, `displayname`, `aboutme`, `creationdate`, `avatar_id`) VALUES
+(2, 'pallen', 'm$ftw', '', '', '2015-02-09 02:46:10', 0),
+(3, 'tblee', '0mGth3WeB!', '', '', '2015-02-09 02:46:10', 8),
+(4, 'bourne', 'bash_$', '', '', '2015-02-09 02:46:10', 0),
+(5, 'edsger', 'st1ll1l11lG0O2', '', '', '2015-02-09 02:46:10', 0),
+(6, 'wgates', '5il3M4X_m$4L', '', '', '2015-02-09 02:46:10', 0),
+(7, 'hopper', 'im4usn', '', '', '2015-02-09 02:46:10', 0),
+(8, 'dknuth', 'tek!tex', '', '', '2015-02-09 02:46:10', 0),
+(9, 'ada', 'wtf15b4b', '', '', '2015-02-09 02:46:10', 0),
+(10, 'cmoore', 'moreM00R3!', '', '', '2015-02-09 02:46:10', 0),
+(11, 'jresig', 'In0JS', '', '', '2015-02-09 02:46:10', 0),
+(12, 'atanen', 'minix!minix', '', '', '2015-02-09 02:46:10', 0),
+(13, 'linus', 'ilUvP3nGu1n5', '', '', '2015-02-09 02:46:10', 0),
+(14, 'aturing', '1nfin1t3TAp3', '', '', '2015-02-09 02:46:10', 0),
+(15, 'lwall', 'oysters&camels', '', '', '2015-02-09 02:46:10', 0),
+(16, 'thewoz', '4daK1d5', '', '', '2015-02-09 02:46:10', 0),
+(21, 'username', 'asdf', '', '', '2015-03-12 04:12:30', 0),
+(25, 'rcodonnell', 'asdf', '', '', '2015-03-16 04:29:19', 0);
 
 --
 -- Indexes for dumped tables
@@ -121,6 +149,12 @@ INSERT INTO `user` (`id`, `username`, `password`, `displayname`, `aboutme`, `cre
 -- Indexes for table `answer`
 --
 ALTER TABLE `answer`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `avatar`
+--
+ALTER TABLE `avatar`
  ADD PRIMARY KEY (`id`);
 
 --
@@ -143,7 +177,12 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `answer`
 --
 ALTER TABLE `answer`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+--
+-- AUTO_INCREMENT for table `avatar`
+--
+ALTER TABLE `avatar`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `question`
 --
@@ -153,7 +192,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=22;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=27;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
