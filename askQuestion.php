@@ -14,9 +14,9 @@ $query = mysqli_query($link, "
   SELECT id, title
   FROM question");
 
-function insert_Question($title, $description) {
+function insert_Question($title, $description, $link) {
   $ownerID = $_SESSION['user_key'];
-  $query = mysqli_query($linl, "
+  $query = mysqli_query($link, "
     INSERT INTO question (title, body, ownerid)
     VALUES ('{$title}', '{$description}', '{$ownerID}') ");
 }
@@ -24,7 +24,7 @@ function insert_Question($title, $description) {
 
 
 if($_POST && !empty($_POST['title']) && !empty($_POST['description'])) {
-  insert_Question($_POST['title'], $_POST['description']);
+  insert_Question($link, $_POST['title'], $_POST['description']);
 } else {
   $response = "Please make sure both field are filled out";
 }
