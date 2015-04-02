@@ -51,7 +51,6 @@ $query = mysqli_query($link, "
   </nav>
 
   <div class="container">
-<<<<<<< HEAD
   <div class="row">
     <h2>List of Questions</h2>
     <div class="col s12 m1"><strong>Rating</strong></div>
@@ -72,18 +71,5 @@ $query = mysqli_query($link, "
     <?php mysqli_close($link); ?>
   </div>
   </div>
-=======
-    <h2>List of Questions</h2>
-    <?php while($row = mysqli_fetch_array($query)): ?>
-      <div class="question">
-        <p><?php
-        $url = 'displayQuestion.php?question_id=' . $row['id'];
-        $site_title = $row['title'];
-        echo "<a href=$url><em>Rating: </em>".$row['score']." <em>Title: </em>$site_title</a>" ?></p>
-      </div>
-    <?php endwhile?>
-    <?php mysqli_close($link); ?>
-  </div>
->>>>>>> 06c522f622c6d4bf6ed29eb8ef5ac13c8efc6893
 </body>
 </html>

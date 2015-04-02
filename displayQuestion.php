@@ -98,7 +98,6 @@ if($_POST && !empty($_POST['answer'])) {
   </nav>
 
     <div class="container">
-<<<<<<< HEAD
     <h3>Question</h3>
       <?php while($row = mysqli_fetch_array($query)): ?>
         <?php $answerid = $row['correctanswer'];?>
@@ -111,15 +110,6 @@ if($_POST && !empty($_POST['answer'])) {
                  $url = 'displayUser.php?user_id=' . $row['ownerid'];
                  echo "<a href=$url>$username</a>" ;?></p>
         <img class="avatar" src="<?php avatar_src($link, $row['ownerid']);?>">
-=======
-    <h2>Question</h2>
-      <?php while($row = mysqli_fetch_array($query)): ?>
-        <?php $answerid = $row['correctanswer'];?>
-      <div class="item" data-postid="<?php echo $row['id'] ?>" data-score="<?php echo $row['score'] ?>"
-      data-owner="<?php echo $row['ownerid'] ?>" data-user="<?php echo $_SESSION['user_key'] ?>"
-      data-quesid="<?php echo $question_id ?>">
-      <div class="vote-span"><!-- voting-->
->>>>>>> 06c522f622c6d4bf6ed29eb8ef5ac13c8efc6893
         <div class="vote" data-action="up" title="Vote up">
           <i class="fa fa-chevron-up"></i>
         </div><!--vote up-->
@@ -129,30 +119,15 @@ if($_POST && !empty($_POST['answer'])) {
         </div><!--vote down-->
       </div>
 
-<<<<<<< HEAD
       <div class="col s12 m11 post"><!-- post data -->
       <h5><?php echo $row['title'];?></h5>
       <p><?php echo "Body: " . $row['body'];?></p>
-=======
-      <div class="post"><!-- post data -->
-      <h4><?php echo "Title: " . $row['title'];?></h4>
-      <p><?php echo "Body: " . $row['body'];?></p>
-      <p><?php $owner = $row['ownerid'];
-               $username = retrieve_Username($link, $owner);
-               $url = 'displayUser.php?user_id=' . $row['ownerid'];
-               echo "User: <a href=$url>$username</a>" ;?></p>
-      <img src="<?php avatar_src($link, $row['ownerid']);?>">
->>>>>>> 06c522f622c6d4bf6ed29eb8ef5ac13c8efc6893
       <p><?php echo "Date: " . $row['creationdate'];?></p>
       </div>
     </div><!--item-->
       <?php endwhile?>
 
-<<<<<<< HEAD
     <h3>Answers</h3>
-=======
-    <h2>Answers</h2>
->>>>>>> 06c522f622c6d4bf6ed29eb8ef5ac13c8efc6893
     <?php
     $ansquery = mysqli_query($link, "
       SELECT *
@@ -162,7 +137,6 @@ if($_POST && !empty($_POST['answer'])) {
 
       while($row = mysqli_fetch_array($ansquery)): ?>
         <hr>
-<<<<<<< HEAD
     <div class="row item" data-postid="<?php echo $row['id'] ?>" data-score="<?php echo $row['score'] ?>"
       data-owner="<?php echo $owner ?>" data-user="<?php echo $_SESSION['user_key'] ?>"
       data-quesid="<?php echo $question_id ?>" data-ansid="<?php echo $answerid?>">
@@ -171,12 +145,6 @@ if($_POST && !empty($_POST['answer'])) {
           $url = 'displayUser.php?user_id=' . $row['ownerid'];
           echo "<a href=$url>$username</a>" ;?></p>
         <img class="avatar" src="<?php avatar_src($link, $row['ownerid']);?>">
-=======
-    <div class="item" data-postid="<?php echo $row['id'] ?>" data-score="<?php echo $row['score'] ?>"
-      data-owner="<?php echo $owner ?>" data-user="<?php echo $_SESSION['user_key'] ?>"
-      data-quesid="<?php echo $question_id ?>" data-ansid="<?php echo $answerid?>">
-      <div class="vote-span"><!-- voting-->
->>>>>>> 06c522f622c6d4bf6ed29eb8ef5ac13c8efc6893
         <div class="vote" data-action="up" title="Vote up">
           <i class="fa fa-chevron-up"></i>
         </div><!--vote up-->
@@ -189,27 +157,13 @@ if($_POST && !empty($_POST['answer'])) {
         </div><!--vote down--><!--Accept Answer-->
       </div>
 
-<<<<<<< HEAD
       <div class="col s12 m11 post"><!-- post data -->
         <p><?php echo $row['body'] ?></p>
-=======
-      <div class="post"><!-- post data -->
-        <p><?php echo $row['body'] ?></p>
-        <p><?php $username = retrieve_Username($link, $row['ownerid']);
-            $url = 'displayUser.php?user_id=' . $row['ownerid'];
-            echo "User: <a href=$url>$username</a>" ;?></p>
-        <img src="<?php avatar_src($link, $row['ownerid']);?>">
-
->>>>>>> 06c522f622c6d4bf6ed29eb8ef5ac13c8efc6893
         <p><?php echo $row['creationdate'] ?></p>
       </div>
     </div><!--item-->
     <?php endwhile?>
-<<<<<<< HEAD
       <h3>Post and answer to the Question</h3>
-=======
-      <h2>Post and answer to the Question</h2>
->>>>>>> 06c522f622c6d4bf6ed29eb8ef5ac13c8efc6893
       <form method="post" action="">
         <div>
           <label for="answer">Answer Question</label>
