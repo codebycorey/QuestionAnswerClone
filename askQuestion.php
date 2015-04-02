@@ -14,7 +14,7 @@ $query = mysqli_query($link, "
   SELECT id, title
   FROM question");
 
-function insert_Question($title, $description, $link) {
+function insert_Question($link, $title, $description) {
   $ownerID = $_SESSION['user_key'];
   $query = mysqli_query($link, "
     INSERT INTO question (title, body, ownerid)

@@ -66,6 +66,7 @@ if($_POST && !empty($_POST['answer'])) {
 <head>
 
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
     <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/css/materialize.min.css">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -97,13 +98,18 @@ if($_POST && !empty($_POST['answer'])) {
   </nav>
 
     <div class="container">
-    <h2>Question</h2>
+    <h3>Question</h3>
       <?php while($row = mysqli_fetch_array($query)): ?>
         <?php $answerid = $row['correctanswer'];?>
-      <div class="item" data-postid="<?php echo $row['id'] ?>" data-score="<?php echo $row['score'] ?>"
+    <div class="row item" data-postid="<?php echo $row['id'] ?>" data-score="<?php echo $row['score'] ?>"
       data-owner="<?php echo $row['ownerid'] ?>" data-user="<?php echo $_SESSION['user_key'] ?>"
       data-quesid="<?php echo $question_id ?>">
-      <div class="vote-span"><!-- voting-->
+      <div class="col s12 m1 center vote-span"><!-- voting-->
+        <p><?php $owner = $row['ownerid'];
+                 $username = retrieve_Username($link, $owner);
+                 $url = 'displayUser.php?user_id=' . $row['ownerid'];
+                 echo "<a href=$url>$username</a>" ;?></p>
+        <img class="avatar" src="<?php avatar_src($link, $row['ownerid']);?>">
         <div class="vote" data-action="up" title="Vote up">
           <i class="fa fa-chevron-up"></i>
         </div><!--vote up-->
@@ -113,20 +119,15 @@ if($_POST && !empty($_POST['answer'])) {
         </div><!--vote down-->
       </div>
 
-      <div class="post"><!-- post data -->
-      <h4><?php echo "Title: " . $row['title'];?></h4>
+      <div class="col s12 m11 post"><!-- post data -->
+      <h5><?php echo $row['title'];?></h5>
       <p><?php echo "Body: " . $row['body'];?></p>
-      <p><?php $owner = $row['ownerid'];
-               $username = retrieve_Username($link, $owner);
-               $url = 'displayUser.php?user_id=' . $row['ownerid'];
-               echo "User: <a href=$url>$username</a>" ;?></p>
-      <img src="<?php avatar_src($link, $row['ownerid']);?>">
       <p><?php echo "Date: " . $row['creationdate'];?></p>
       </div>
     </div><!--item-->
       <?php endwhile?>
 
-    <h2>Answers</h2>
+    <h3>Answers</h3>
     <?php
     $ansquery = mysqli_query($link, "
       SELECT *
@@ -136,10 +137,14 @@ if($_POST && !empty($_POST['answer'])) {
 
       while($row = mysqli_fetch_array($ansquery)): ?>
         <hr>
-    <div class="item" data-postid="<?php echo $row['id'] ?>" data-score="<?php echo $row['score'] ?>"
+    <div class="row item" data-postid="<?php echo $row['id'] ?>" data-score="<?php echo $row['score'] ?>"
       data-owner="<?php echo $owner ?>" data-user="<?php echo $_SESSION['user_key'] ?>"
       data-quesid="<?php echo $question_id ?>" data-ansid="<?php echo $answerid?>">
-      <div class="vote-span"><!-- voting-->
+      <div class="center col s12 m1 vote-span"><!-- voting-->
+        <p><?php $username = retrieve_Username($link, $row['ownerid']);
+          $url = 'displayUser.php?user_id=' . $row['ownerid'];
+          echo "<a href=$url>$username</a>" ;?></p>
+        <img class="avatar" src="<?php avatar_src($link, $row['ownerid']);?>">
         <div class="vote" data-action="up" title="Vote up">
           <i class="fa fa-chevron-up"></i>
         </div><!--vote up-->
@@ -152,18 +157,13 @@ if($_POST && !empty($_POST['answer'])) {
         </div><!--vote down--><!--Accept Answer-->
       </div>
 
-      <div class="post"><!-- post data -->
+      <div class="col s12 m11 post"><!-- post data -->
         <p><?php echo $row['body'] ?></p>
-        <p><?php $username = retrieve_Username($link, $row['ownerid']);
-            $url = 'displayUser.php?user_id=' . $row['ownerid'];
-            echo "User: <a href=$url>$username</a>" ;?></p>
-        <img src="<?php avatar_src($link, $row['ownerid']);?>">
-
         <p><?php echo $row['creationdate'] ?></p>
       </div>
     </div><!--item-->
     <?php endwhile?>
-      <h2>Post and answer to the Question</h2>
+      <h3>Post and answer to the Question</h3>
       <form method="post" action="">
         <div>
           <label for="answer">Answer Question</label>

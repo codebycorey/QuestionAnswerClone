@@ -14,7 +14,7 @@ $query = mysqli_query($link, "
   SELECT id, title, score
   FROM question
   ORDER BY score DESC
-  LIMIT 5");
+  LIMIT 15");
 ?>
 
 <!DOCTYPE html>
@@ -51,16 +51,25 @@ $query = mysqli_query($link, "
   </nav>
 
   <div class="container">
+  <div class="row">
     <h2>List of Questions</h2>
+    <div class="col s12 m1"><strong>Rating</strong></div>
+    <div class="col s12 m11"><strong>Title</strong></div>
     <?php while($row = mysqli_fetch_array($query)): ?>
-      <div class="question">
+      <hr>
+      <div class="col s12 m1">
+        <p><?php echo $row['score'] ?></p>
+      </div>
+      <div class="col s12 m11">
         <p><?php
         $url = 'displayQuestion.php?question_id=' . $row['id'];
         $site_title = $row['title'];
-        echo "<a href=$url><em>Rating: </em>".$row['score']." <em>Title: </em>$site_title</a>" ?></p>
+        echo "<a href=$url>$site_title</a>" ?></p>
       </div>
+
     <?php endwhile?>
     <?php mysqli_close($link); ?>
+  </div>
   </div>
 </body>
 </html>
