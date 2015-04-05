@@ -165,7 +165,7 @@ if($_POST && !empty($_POST['answer'])) {
     </div><!--item-->
     <?php endwhile?>
       <h3>Post and answer to the Question</h3>
-      <form method="post" action="">
+      <form method="post" action="<?=$_SERVER['PHP_SELF'];?>">
         <div>
           <label for="answer">Answer Question</label>
           <textarea type="text" name="answer" value="" id="answer" placeholder="answer"></textarea>

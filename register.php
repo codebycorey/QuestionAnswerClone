@@ -65,7 +65,7 @@ if($_POST && !empty($_POST['username']) && !empty($_POST['password']) && !empty(
   </nav>
     <div class="container">
     <h1>Please create a User Account to access the rest of the website</h1>
-      <form method="post" action="">
+      <form method="post" action="<?=$_SERVER['PHP_SELF'];?>">
         <div>
           <input type="text" name="username" value="" id="username" placeholder="Username">
         </div>

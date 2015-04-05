@@ -69,7 +69,7 @@ if($_POST && !empty($_POST['title']) && !empty($_POST['description'])) {
   </nav>
 
   <div class="container">
-      <form method="post" action="">
+      <form method="post" action="<?=$_SERVER['PHP_SELF'];?>">
         <div>
           <input type="text" name="title" value="" id="title" placeholder="Title">
         </div>
