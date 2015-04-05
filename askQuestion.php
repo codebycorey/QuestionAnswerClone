@@ -36,6 +36,7 @@ if($_POST && !empty($_POST['title']) && !empty($_POST['description'])) {
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
       <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/css/materialize.min.css">
