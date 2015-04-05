@@ -65,7 +65,7 @@ if($_POST && !empty($_POST['answer'])) {
 <html>
 <head>
   <meta charset="UTF-8">
-
+  <title>QuestionAnswer</title>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/style.css">
     <!-- Compiled and minified CSS -->
