@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 02, 2015 at 06:03 AM
+-- Generation Time: Apr 05, 2015 at 07:41 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `answer` (
   `score` int(11) NOT NULL,
   `commentcount` int(11) NOT NULL,
   `creationdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `answer`
@@ -80,6 +80,35 @@ INSERT INTO `avatar` (`id`, `filename`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `posttags`
+--
+
+CREATE TABLE IF NOT EXISTS `posttags` (
+  `postid` int(11) NOT NULL,
+  `tagid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `posttags`
+--
+
+INSERT INTO `posttags` (`postid`, `tagid`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(2, 3),
+(2, 4),
+(2, 5),
+(3, 1),
+(3, 2),
+(3, 3),
+(3, 4),
+(3, 5),
+(25, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `question`
 --
 
@@ -94,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `question` (
   `answercount` int(11) NOT NULL,
   `commentcount` int(11) NOT NULL,
   `creationdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `question`
@@ -112,7 +141,37 @@ INSERT INTO `question` (`id`, `title`, `body`, `ownerid`, `correctanswer`, `scor
 (15, ' neque in ultricies rhoncus, enim nisl euismod augue, eget porta velit dolor eget felis.', 'Nullam tempor velit quis molestie tempor. Nam laoreet, nunc fringilla congue bibendum, nunc massa lacinia tortor, sit amet dignissim nunc ligula eget ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas metus lorem, congue non laoreet', 7, 0, 0, 0, 0, 0, '2015-04-02 00:03:50'),
 (16, 'Pellentesque aliquet id ante non ultricies. Aenean quam enim, ullamcorper et euismod ut, ornare ac odio. Mor', ' sapien condimentum sem rhoncus, pellentesque interdum diam porta. Nam gravida, massa sed iaculis dictum, dolor dolor maximus sem, eget lacinia ligula lacus in odio. Aenean a ipsum efficitur, tempus est id, condimentum tellus. Sed velit nulla, interdum at justo ut, commodo lobortis magna. Duis id magna quis erat consectetur elementum id quis leo. Ut in massa velit.', 8, 0, 0, 0, 0, 0, '2015-04-02 00:03:50'),
 (17, ' In vitae vehicula erat. Cras vel odio augue. Proin condimentum venenatis neque, eget ullamcorper magna port', 'Pellentesque orci diam, volutpat at urna vitae, tincidunt dignissim neque. Nullam vel arcu id ante ornare interdum et vitae ligula. Donec faucibus eros non velit luctus congue. Donec ac sapien quis ligula tincidunt ultrices.', 9, 0, 0, 0, 0, 0, '2015-04-02 00:03:50'),
-(18, 'Nam laoreet, nunc fringilla congue bibendum, nunc massa lacinia tortor, sit amet dignissim nunc ligula eget ', 'eget libero. Aenean vulputate, massa sed ornare vulputate, tellus justo feugiat ante, malesuada vestibulum nunc dolor at mi. ', 10, 0, 0, 0, 0, 0, '2015-04-02 00:03:50');
+(18, 'Nam laoreet, nunc fringilla congue bibendum, nunc massa lacinia tortor, sit amet dignissim nunc ligula eget ', 'eget libero. Aenean vulputate, massa sed ornare vulputate, tellus justo feugiat ante, malesuada vestibulum nunc dolor at mi. ', 10, 0, 0, 0, 0, 0, '2015-04-02 00:03:50'),
+(19, 'tagtest', 'just testing the tag insert', 4, 0, 0, 0, 0, 0, '2015-04-05 04:32:22'),
+(20, 'tagtest', 'just testing the tag insert', 4, 0, 0, 0, 0, 0, '2015-04-05 04:32:39'),
+(21, 'test tags2', 'testing the tags again', 4, 0, 0, 0, 0, 0, '2015-04-05 04:35:17'),
+(22, 'test tags2', 'testing the tags again', 4, 0, 0, 0, 0, 0, '2015-04-05 04:36:14'),
+(23, 'test tags2', 'testing the tags again', 4, 0, 0, 0, 0, 0, '2015-04-05 04:37:16'),
+(24, 'testing tags3', 'test', 4, 0, 0, 0, 0, 0, '2015-04-05 04:37:38'),
+(25, 'testing tags3', 'test', 4, 0, 0, 0, 0, 0, '2015-04-05 04:38:14');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tags`
+--
+
+CREATE TABLE IF NOT EXISTS `tags` (
+`id` int(11) NOT NULL,
+  `tagname` varchar(24) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tags`
+--
+
+INSERT INTO `tags` (`id`, `tagname`) VALUES
+(1, 'tag1'),
+(2, 'tag2'),
+(3, 'tag3'),
+(4, 'tag4'),
+(5, 'tag5'),
+(7, 'testtag');
 
 -- --------------------------------------------------------
 
@@ -177,6 +236,12 @@ ALTER TABLE `question`
  ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tags`
+--
+ALTER TABLE `tags`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `tagname` (`tagname`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -190,7 +255,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `answer`
 --
 ALTER TABLE `answer`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `avatar`
 --
@@ -200,7 +265,12 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 -- AUTO_INCREMENT for table `question`
 --
 ALTER TABLE `question`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=20;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=26;
+--
+-- AUTO_INCREMENT for table `tags`
+--
+ALTER TABLE `tags`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `user`
 --
