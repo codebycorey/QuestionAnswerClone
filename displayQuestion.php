@@ -55,6 +55,23 @@ function avatar_src($link, $ownerid) {
   return $src;
 }
 
+function find_tags($link, $question_id){
+  $tagquery = mysqli_query($link, "
+    SELECT id, tagname
+    FROM tags
+    JOIN posttags ON tags.id = posttags.tagid
+    WHERE postid = '{$question_id}'");
+
+  $taglinks = '';
+
+  while($row = mysqli_fetch_array($tagquery)) {
+    $url = 'displayTag.php?tag_id=' . $row['id'];
+    $tagname = $row['tagname'];
+    $taglinks .= "<a href=$url>$tagname</a> ";
+  }
+  return $taglinks;
+}
+
 if($_POST && !empty($_POST['answer'])) {
   $response = Insert_Answer($_POST['answer'], $_GET['question_id'], $link);
   header("Location: displayQuestion.php?question_id=$question_id");
@@ -121,9 +138,10 @@ if($_POST && !empty($_POST['answer'])) {
       </div>
 
       <div class="col s12 m11 post"><!-- post data -->
-      <h5><?php echo $row['title'];?></h5>
-      <p><?php echo "Body: " . $row['body'];?></p>
-      <p><?php echo "Date: " . $row['creationdate'];?></p>
+        <h5><?php echo $row['title'];?></h5>
+        <p><?php echo "Body: " . $row['body'];?></p>
+        <p><?php echo find_tags($link, $question_id)?></p>
+        <p><?php echo "Date: " . $row['creationdate'];?></p>
       </div>
     </div><!--item-->
       <?php endwhile?>

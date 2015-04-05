@@ -2,27 +2,33 @@
 session_start();
 include('config.php');
 
-if($_SESSION['status'] !='authorized') {
-  header("location: login.php");
-  die();
-}
-
 $link = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME)  or
   die('There was a problem connecting to the database');
 
-$query = mysqli_query($link, "
-  SELECT id, title, score
-  FROM question
-  ORDER BY score DESC
-  LIMIT 15");
+$namequery = mysqli_query($link, "
+  SELECT tagname
+  FROM tags
+  WHERE id = '".$_GET['tag_id']."'");
+
+while($row = mysqli_fetch_array($namequery)){
+  $tagname = $row['tagname'];
+}
+
+$tagquery = mysqli_query($link, "
+  SELECT postid, tagname, title, score, question.id
+  FROM tags
+  JOIN posttags ON tags.id = posttags.tagid
+  JOIN question ON question.id = posttags.postid
+  WHERE tagid = '".$_GET['tag_id']."'");
 ?>
+
 
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
   <title>QuestionAnswer</title>
-      <!-- Compiled and minified CSS -->
+    <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/css/materialize.min.css">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <!-- Compiled and minified JavaScript -->
@@ -33,7 +39,7 @@ $query = mysqli_query($link, "
 <body>
   <nav class="lighten-1" role="navigation">
     <div class="container">
-      <div class="nav-wrapper"><a id="logo-container" href="<?php echo 'displayUser.php?user_id=' . $_SESSION['user_key'] ?>" class="brand-logo">Welcome "<?php echo $_SESSION['user_id'];?>!"</a>
+      <div class="nav-wrapper"><a id="logo-container" href="#" class="brand-logo">Welcome "<?php echo $_SESSION['user_id'];?>!"</a>
         <ul class="right">
           <li><a href="login.php?status=loggedout">Log Out</a></li>
         </ul>
@@ -53,10 +59,12 @@ $query = mysqli_query($link, "
   </nav>
 
   <div class="container row">
+    <h2>Tag</h2>
+      <h4><?php echo $tagname ?><h4>
     <h2>List of Questions</h2>
     <div class="col s12 m1"><strong>Rating</strong></div>
     <div class="col s12 m11"><strong>Title</strong></div>
-    <?php while($row = mysqli_fetch_array($query)): ?>
+    <?php while($row = mysqli_fetch_array($tagquery)): ?>
       <hr>
       <div class="col s12 m1">
         <p><?php echo $row['score'] ?></p>

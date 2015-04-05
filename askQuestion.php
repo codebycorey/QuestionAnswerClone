@@ -20,8 +20,30 @@ function insert_Question($link, $title, $description) {
   $query = mysqli_query($link, "
     INSERT INTO question (title, body, ownerid)
     VALUES ('{$title}', '{$description}', '{$ownerID}') ");
+  $quesId = mysqli_insert_id($link);
+  if(!empty($_POST['tags'])) {
+    insert_Tags($link, $_POST['tags'], $quesId);
+  }
 }
 
+function insert_Tags($link, $tags, $quesId) {
+  echo $quesId;
+  $tagArray = preg_split('/\s+/', $tags);
+  for($i = 0; $i < count($tagArray); $i++) {
+    $query = mysqli_query($link, "
+      INSERT INTO tags (tagname)
+      VALUES ('{$tagArray[$i]}')");
+
+    $query2 = mysqli_query($link, "
+      INSERT INTO posttags
+      SELECT '{$quesId}', id
+      FROM tags
+      WHERE tagname = '$tagArray[$i]'");
+    if($query2 == false) {
+      echo 'false';
+    }
+  }
+}
 
 
 if($_POST && !empty($_POST['title']) && !empty($_POST['description'])) {
@@ -75,6 +97,9 @@ if($_POST && !empty($_POST['title']) && !empty($_POST['description'])) {
         </div>
         <div>
           <textarea type="text" name="description" value="" id="description" placeholder="description"></textarea>
+        </div>
+        <div>
+          <input type="text" name="tags" value="" id="tags" placeholder="Tags">
         </div>
         <div>
         <input type="submit" value="Submit">

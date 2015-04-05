@@ -59,7 +59,7 @@ $quesquery = mysqli_query($link, "
   <div class="container">
     <h2>User</h2>
       <?php while($row = mysqli_fetch_array($query)): ?>
-      <h4><?php echo "Username: " . $row['username'];?></h4>
+      <h4><?php echo $row['username'];?></h4>
       <h4>Avatar</h4><?php $src = "avatars/".$row['filename'];
       echo "<img src=$src> "?>
       <?php endwhile?>
