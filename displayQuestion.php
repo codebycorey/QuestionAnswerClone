@@ -164,6 +164,9 @@ if($_POST && isset($_POST['subedit']) &&!empty($_POST['editbody'])) {
   <nav class="lighten-1" role="navigation">
     <div class="container">
       <div class="nav-wrapper"><a id="logo-container" href="<?php echo 'displayUser.php?user_id=' . $_SESSION['user_key'] ?>" class="brand-logo">Welcome "<?php echo $_SESSION['user_id'];?>!"</a>
+        <form class="right" id="searchform" method="post">
+            <input type="text" name="search_query" id="search_query" size="24" placeholder="Who are you looking for?"/>
+        </form>
         <ul class="right">
           <li><a href="login.php?status=loggedout">Log Out</a></li>
         </ul>
@@ -183,6 +186,7 @@ if($_POST && isset($_POST['subedit']) &&!empty($_POST['editbody'])) {
   </nav>
 
     <div class="container">
+    <div id="display_results"></div>
     <h3>Question</h3>
       <?php while($row = mysqli_fetch_array($query)): ?>
         <?php $answerid = $row['correctanswer'];
