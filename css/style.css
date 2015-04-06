@@ -5,3 +5,26 @@
 textarea {
   height: 700px;
 }
+
+input#search_query {
+  color: #37474f;
+  background: white;
+  height: 25px;
+}
+
+#display_results {
+  position: absolute;
+  background: white;
+  border: 2px solid #ee6e73;
+  text-align: left;
+  float: left;
+  left: 570px;
+  top: 50px;
+  width: 192px;
+  padding-left: 2px;
+}
+
+.search {
+  background: white;
+  width: 100px;
+}

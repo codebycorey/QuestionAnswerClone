@@ -86,7 +86,7 @@ if($_POST && !empty($_POST['username']) && !empty($_POST['password'])) {
 <body>
     <div class="container">
     <h1>Please log in to access the rest of the website</h1>
-      <form method="post" action="<?=$_SERVER['PHP_SELF'];?>">
+      <form method="post">
         <div>
           <input type="text" name="username" value="" id="username" placeholder="Username">
         </div>

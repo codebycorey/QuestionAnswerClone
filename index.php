@@ -24,17 +24,22 @@ $query = mysqli_query($link, "
   <meta charset="UTF-8">
   <title>QuestionAnswer</title>
       <!-- Compiled and minified CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/css/materialize.min.css">
+  <link rel="stylesheet" href="css/materialize.css">
+  <link rel="stylesheet" href="css/style.css">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/js/materialize.min.js"></script>
-
+  <script src="js/search.js"></script>
 </head>
 
 <body>
   <nav class="lighten-1" role="navigation">
     <div class="container">
-      <div class="nav-wrapper"><a id="logo-container" href="<?php echo 'displayUser.php?user_id=' . $_SESSION['user_key'] ?>" class="brand-logo">Welcome "<?php echo $_SESSION['user_id'];?>!"</a>
+      <div class="nav-wrapper">
+        <a id="logo-container" href="<?php echo 'displayUser.php?user_id=' . $_SESSION['user_key'] ?>" class="brand-logo">Welcome "<?php echo $_SESSION['user_id'];?>!"</a>
+          <form class="right" id="searchform" method="post">
+            <input type="text" name="search_query" id="search_query" size="24" placeholder="Who are you looking for?"/>
+          </form>
         <ul class="right">
           <li><a href="login.php?status=loggedout">Log Out</a></li>
         </ul>
@@ -52,10 +57,8 @@ $query = mysqli_query($link, "
       </div>
     </div>
   </nav>
-
   <div class="container row">
-    <form id="searchform" method="post">
-      <input type"text" name="search_query" id="search_query" placeholder="Who are you looking for?"/>
+  <div id="display_results"></div>
     <h2>List of Questions</h2>
     <div class="col s12 m1"><strong>Rating</strong></div>
     <div class="col s12 m11"><strong>Title</strong></div>
