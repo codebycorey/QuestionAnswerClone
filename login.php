@@ -9,7 +9,8 @@ function verify_Username_and_Pass($un, $pwd) {
     or die('Could not connect to MySQL DB ') . mysql_error();
 
   $query = mysqli_query($link, "
-    SELECT id FROM user
+    SELECT id, admin
+    FROM user
     WHERE username = '{$un}' AND password = '{$pwd}'");
 
   $numrows = mysqli_num_rows($query);
@@ -17,6 +18,10 @@ function verify_Username_and_Pass($un, $pwd) {
   if($numrows === 1) {
     while($row = mysqli_fetch_assoc($query)) {
       $_SESSION['user_key'] = $row['id'];
+      $_SESSION['edit'] = false;
+      if($row['admin']==1){
+        $_SESSION['admin'] = true;
+      }
       return true;
     }
   } else {

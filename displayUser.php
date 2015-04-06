@@ -17,7 +17,16 @@ $quesquery = mysqli_query($link, "
   FROM question
   WHERE ownerid = '".$_GET['user_id']."'");
 
-
+$scorequery = mysqli_query($link, "
+  select sum(score) totalscore
+  from (select score from question
+  where ownerid = '".$_GET['user_id']."'
+  union all
+  select score from answer
+  where ownerid = '".$_GET['user_id']."') tb");
+while($row = mysqli_fetch_array($scorequery)) {
+  $score = $row['totalscore'];
+}
 ?>
 
 
@@ -59,7 +68,7 @@ $quesquery = mysqli_query($link, "
   <div class="container">
     <h2>User</h2>
       <?php while($row = mysqli_fetch_array($query)): ?>
-      <h4><?php echo $row['username'];?></h4>
+      <h4><?php echo $row['username'] . " " . $score; ?></h4>
       <h4>Avatar</h4><?php $src = "avatars/".$row['filename'];
       echo "<img src=$src> "?>
       <?php endwhile?>

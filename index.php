@@ -13,6 +13,7 @@ $link = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME)  or
 $query = mysqli_query($link, "
   SELECT id, title, score
   FROM question
+  WHERE removed != 1
   ORDER BY score DESC
   LIMIT 15");
 ?>
@@ -53,6 +54,8 @@ $query = mysqli_query($link, "
   </nav>
 
   <div class="container row">
+    <form id="searchform" method="post">
+      <input type"text" name="search_query" id="search_query" placeholder="Who are you looking for?"/>
     <h2>List of Questions</h2>
     <div class="col s12 m1"><strong>Rating</strong></div>
     <div class="col s12 m11"><strong>Title</strong></div>

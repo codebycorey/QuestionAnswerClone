@@ -6160,7 +6160,7 @@ label {
 
 textarea {
   width: 100%;
-  height: 3rem;
+  height: 5rem;
   background-color: transparent; }
 
 input[type=text], input[type=password], input[type=email], input[type=url], input[type=date], input[type=tel], input[type=number], input[type=search], textarea.materialize-textarea {

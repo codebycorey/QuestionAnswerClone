@@ -11,6 +11,7 @@ $link = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME)  or
   die('There was a problem connecting to the database');
 
 $question_id = $_GET['question_id'];
+$freeze = 0;
 
 $query = mysqli_query($link, "
   SELECT *
@@ -28,6 +29,20 @@ function retrieve_Username($link, $id) {
     $user = $row['username'];
   }
   return $user;
+}
+
+function retrieve_Userscore($link, $id) {
+  $scorequery = mysqli_query($link, "
+    select sum(score) totalscore
+    from (select score from question
+    where ownerid = '$id'
+    union all
+    select score from answer
+    where ownerid = '$id') tb");
+  while($row = mysqli_fetch_array($scorequery)) {
+    $score = $row['totalscore'];
+  }
+  return $score;
 }
 
 function Insert_Answer($ans, $question_id, $link) {
@@ -72,8 +87,60 @@ function find_tags($link, $question_id){
   return $taglinks;
 }
 
+function unfreeze($link, $quesId) {
+  $unfreezequery = mysqli_query($link, "
+    UPDATE question
+    SET freeze = 0
+    WHERE id = '{$quesId}'");
+}
+
+function freeze($link, $quesId) {
+  $unfreezequery = mysqli_query($link, "
+    UPDATE question
+    SET freeze = 1
+    WHERE id = '{$quesId}'");
+}
+
+function update_Question($link, $editbody, $quesId) {
+  $updateBody = mysqli_query($link, "
+    UPDATE question
+    SET body = '{$editbody}'
+    WHERE id = '{$quesId}'");
+}
+
+function delete_Question($link, $quesId) {
+  $unfreezequery = mysqli_query($link, "
+    UPDATE question
+    SET removed = 1
+    WHERE id = '{$quesId}'");
+    if($deletequery == false) {
+      echo "false";
+    }
+}
+
+if($_POST && isset($_POST['delete'])) {
+  delete_Question($link, $_GET['question_id']);
+  header("Location: displayQuestion.php?question_id=$question_id");
+}
 if($_POST && !empty($_POST['answer'])) {
   $response = Insert_Answer($_POST['answer'], $_GET['question_id'], $link);
+  header("Location: displayQuestion.php?question_id=$question_id");
+}
+if($_POST && isset($_POST['unfreeze'])) {
+  $response = unfreeze($link, $_GET['question_id']);
+  header("Location: displayQuestion.php?question_id=$question_id");
+}
+if($_POST && isset($_POST['freeze'])) {
+  $response = freeze($link, $_GET['question_id']);
+  header("Location: displayQuestion.php?question_id=$question_id");
+}
+if($_POST && isset($_POST['edit'])) {
+  $_SESSION['edit'] = true;
+  header("Location: displayQuestion.php?question_id=$question_id");
+}
+if($_POST && isset($_POST['subedit']) &&!empty($_POST['editbody'])) {
+  $_SESSION['edit'] = false;
+  update_Question($link, $_POST['editbody'], $_GET['question_id']);
   header("Location: displayQuestion.php?question_id=$question_id");
 }
 
@@ -118,15 +185,24 @@ if($_POST && !empty($_POST['answer'])) {
     <div class="container">
     <h3>Question</h3>
       <?php while($row = mysqli_fetch_array($query)): ?>
-        <?php $answerid = $row['correctanswer'];?>
+        <?php $answerid = $row['correctanswer'];
+              $freeze = $row['freeze'];
+              $delete = $row['removed']?>
     <div class="row item" data-postid="<?php echo $row['id'] ?>" data-score="<?php echo $row['score'] ?>"
       data-owner="<?php echo $row['ownerid'] ?>" data-user="<?php echo $_SESSION['user_key'] ?>"
       data-quesid="<?php echo $question_id ?>">
-      <div class="col s12 m1 center vote-span"><!-- voting-->
+      <?php if($delete != 1): ?>
+      <?php if($freeze == 1): ?>
+        <div class="col s12 m12 center">
+        <h3>QUESTION FROZEN</h3>
+        </div>
+      <?php endif ?>
+      <div class="col s12 m2 center vote-span"><!-- voting-->
         <p><?php $owner = $row['ownerid'];
                  $username = retrieve_Username($link, $owner);
                  $url = 'displayUser.php?user_id=' . $row['ownerid'];
-                 echo "<a href=$url>$username</a>" ;?></p>
+                 echo "<a href=$url>$username</a> " ;
+                 echo retrieve_Userscore($link, $row['ownerid']);?></p>
         <img class="avatar" src="<?php avatar_src($link, $row['ownerid']);?>">
         <div class="vote" data-action="up" title="Vote up">
           <i class="fa fa-chevron-up"></i>
@@ -137,15 +213,38 @@ if($_POST && !empty($_POST['answer'])) {
         </div><!--vote down-->
       </div>
 
-      <div class="col s12 m11 post"><!-- post data -->
+      <div class="col s12 m10 post"><!-- post data -->
         <h5><?php echo $row['title'];?></h5>
-        <p><?php echo "Body: " . $row['body'];?></p>
+        <?php if($_SESSION['edit'] == true): ?>
+        <form method="post" class="input-field">
+          <div>
+            <textarea type="text" name="editbody" row="50" id="editbody"><?php echo $row['body']; ?></textarea>
+          </div>
+        <div>
+        <input type="submit" name="subedit" value="Submit">
+        </div>
+        </form>
+        <?php endif ?>
+        <?php if($_SESSION['edit'] == false ) {
+         echo "<p>" . $row['body'] . "</P>" ;}?>
         <p><?php echo find_tags($link, $question_id)?></p>
-        <p><?php echo "Date: " . $row['creationdate'];?></p>
+        <p><?php echo $row['creationdate'];?></p>
+      <?php if($_SESSION['admin']): ?>
+        <form method="post">
+          <input type="submit" name="edit" value="Edit"/>
+          <?php if($freeze == 0) {
+            echo '<input type="submit" name="freeze" value="Freeze"/>';
+          } else {
+            echo '<input type="submit" name="unfreeze" value="Unfreeze"/>';
+          }?>
+          <input type="submit" name="delete" value="Delete"/>
+        </form>
+      <?php endif?>
       </div>
     </div><!--item-->
+  <?php endif?>
       <?php endwhile?>
-
+    <?php if($delete != 1): ?>
     <h3>Answers</h3>
     <?php
     $ansquery = mysqli_query($link, "
@@ -159,10 +258,11 @@ if($_POST && !empty($_POST['answer'])) {
     <div class="row item" data-postid="<?php echo $row['id'] ?>" data-score="<?php echo $row['score'] ?>"
       data-owner="<?php echo $owner ?>" data-user="<?php echo $_SESSION['user_key'] ?>"
       data-quesid="<?php echo $question_id ?>" data-ansid="<?php echo $answerid?>">
-      <div class="center col s12 m1 vote-span"><!-- voting-->
+      <div class="center col s12 m2 vote-span"><!-- voting-->
         <p><?php $username = retrieve_Username($link, $row['ownerid']);
-          $url = 'displayUser.php?user_id=' . $row['ownerid'];
-          echo "<a href=$url>$username</a>" ;?></p>
+                 $url = 'displayUser.php?user_id=' . $row['ownerid'];
+                 echo "<a href=$url>$username</a> " ;
+                 echo retrieve_Userscore($link, $row['ownerid']);?></p>
         <img class="avatar" src="<?php avatar_src($link, $row['ownerid']);?>">
         <div class="vote" data-action="up" title="Vote up">
           <i class="fa fa-chevron-up"></i>
@@ -176,14 +276,15 @@ if($_POST && !empty($_POST['answer'])) {
         </div><!--vote down--><!--Accept Answer-->
       </div>
 
-      <div class="col s12 m11 post"><!-- post data -->
+      <div class="col s12 m10 post"><!-- post data -->
         <p><?php echo $row['body'] ?></p>
         <p><?php echo $row['creationdate'] ?></p>
       </div>
     </div><!--item-->
     <?php endwhile?>
+    <?php if($freeze != 1): ?>
       <h3>Post and answer to the Question</h3>
-      <form method="post" action="<?=$_SERVER['PHP_SELF'];?>">
+      <form method="post">
         <div>
           <label for="answer">Answer Question</label>
           <textarea type="text" name="answer" value="" id="answer" placeholder="answer"></textarea>
@@ -192,6 +293,11 @@ if($_POST && !empty($_POST['answer'])) {
         <input type="submit" value="Submit">
         </div>
       </form>
+    <?php endif?>
+  <?php endif?>
+  <?php if($delete ==1){
+    echo "<h3>QUESTION DELETED</h3>";
+  }?>
       </div>
     <?php mysqli_close($link);?>
 </body>

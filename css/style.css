@@ -2,3 +2,6 @@
   max-height: 50px;
   max-width: 50px;
 }
+textarea {
+  height: 700px;
+}
