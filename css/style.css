@@ -13,14 +13,14 @@ input#search_query {
 }
 
 #display_results {
-  position: absolute;
+  position: relative;
   background: white;
   border: 2px solid #ee6e73;
   text-align: left;
-  float: left;
-  left: 570px;
-  top: 50px;
-  width: 192px;
+  float: right;
+  margin-right: -2px;
+  top: -45px;
+  width: 198px;
   padding-left: 2px;
 }
 
