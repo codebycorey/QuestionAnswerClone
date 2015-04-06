@@ -27,7 +27,6 @@ function insert_Question($link, $title, $description) {
 }
 
 function insert_Tags($link, $tags, $quesId) {
-  echo $quesId;
   $tagArray = preg_split('/\s+/', $tags);
   for($i = 0; $i < count($tagArray); $i++) {
     $query = mysqli_query($link, "
@@ -48,6 +47,7 @@ function insert_Tags($link, $tags, $quesId) {
 
 if($_POST && !empty($_POST['title']) && !empty($_POST['description'])) {
   insert_Question($link, $_POST['title'], $_POST['description']);
+  header("location: displayQuestion.question_id=$quesId")
 } else {
   $response = "Please make sure both field are filled out";
 }
