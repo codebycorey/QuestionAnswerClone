@@ -48,7 +48,7 @@ function insert_Tags($link, $tags, $quesId) {
 
 if($_POST && !empty($_POST['title']) && !empty($_POST['description'])) {
   $quesId = insert_Question($link, $_POST['title'], $_POST['description']);
-  header("location: displayQuestion.question_id=$quesId");
+  header("location: displayQuestion.php?question_id=$quesId");
 } else {
   $response = "Please make sure both field are filled out";
 }
