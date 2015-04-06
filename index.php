@@ -57,6 +57,7 @@ $query = mysqli_query($link, "
       </div>
     </div>
   </nav>
+
   <div class="container row">
   <div id="display_results"></div>
     <h2>List of Questions</h2>

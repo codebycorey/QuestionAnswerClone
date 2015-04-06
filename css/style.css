@@ -3,7 +3,10 @@
   max-width: 50px;
 }
 textarea {
-  height: 700px;
+  height: 500px;
+}
+.answer {
+  height: 100px;
 }
 
 input#search_query {
@@ -22,6 +25,7 @@ input#search_query {
   top: -45px;
   width: 198px;
   padding-left: 2px;
+  z-index: 999;
 }
 
 .search {

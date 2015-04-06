@@ -151,13 +151,14 @@ if($_POST && isset($_POST['subedit']) &&!empty($_POST['editbody'])) {
   <meta charset="UTF-8">
   <title>QuestionAnswer</title>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="css/style.css">
     <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="css/materialize.css">
+  <link rel="stylesheet" href="css/style.css">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/js/materialize.min.js"></script>
   <script src="js/votescript.js"></script>
+  <script src="js/search.js"></script>
   </head>
 
 <body>
@@ -187,7 +188,7 @@ if($_POST && isset($_POST['subedit']) &&!empty($_POST['editbody'])) {
 
     <div class="container">
     <div id="display_results"></div>
-    <h3>Question</h3>
+    <h2>Question</h2>
       <?php while($row = mysqli_fetch_array($query)): ?>
         <?php $answerid = $row['correctanswer'];
               $freeze = $row['freeze'];
@@ -290,8 +291,7 @@ if($_POST && isset($_POST['subedit']) &&!empty($_POST['editbody'])) {
       <h3>Post and answer to the Question</h3>
       <form method="post">
         <div>
-          <label for="answer">Answer Question</label>
-          <textarea type="text" name="answer" value="" id="answer" placeholder="answer"></textarea>
+          <textarea type="text" name="answer" value="" class="answer" id="answer" placeholder="answer"></textarea>
         </div>
         <div>
         <input type="submit" value="Submit">

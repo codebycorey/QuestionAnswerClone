@@ -60,12 +60,13 @@ if($_POST && !empty($_POST['title']) && !empty($_POST['description'])) {
 <head>
   <meta charset="UTF-8">
   <title>QuestionAnswer</title>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
       <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="css/materialize.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/js/materialize.min.js"></script>
-
+  <script src="js/search.js"></script>
 </head>
 
 <body>
@@ -93,8 +94,10 @@ if($_POST && !empty($_POST['title']) && !empty($_POST['description'])) {
     </div>
   </nav>
 
-  <div class="container">
+  <div class="container row">
   <div id="display_results"></div>
+    <h2>Ask a Question</h2>
+    <div class="col s12 m12">
       <form method="post">
         <div>
           <input type="text" name="title" value="" id="title" placeholder="Title">
@@ -110,6 +113,6 @@ if($_POST && !empty($_POST['title']) && !empty($_POST['description'])) {
         </div>
       </form>
       <?php if(isset($response)) echo "<h4 class='alert'>" . $response . "</h4>"; ?>
-  </div>
+  </div></div>
 </body>
 </html>
