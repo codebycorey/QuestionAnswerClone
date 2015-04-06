@@ -276,9 +276,11 @@ if($_POST && isset($_POST['subedit']) &&!empty($_POST['editbody'])) {
         <div class="vote" data-action="down" title="Vote down">
           <i class="fa fa-chevron-down"></i>
         </div><!--vote down-->
+        <?php if($freeze == 0): ?>
         <div class="vote" data-action="accept" title="Accept Answer">
           <i class="fa fa-check"></i>
-        </div><!--vote down--><!--Accept Answer-->
+        </div><!--Accept Answer-->
+        <?php endif?>
       </div>
 
       <div class="col s12 m10 post"><!-- post data -->
