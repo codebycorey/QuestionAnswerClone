@@ -72,7 +72,7 @@ if(isset($_GET['email']) && !empty($_GET['email']) &&  isset($_GET['hash']) && !
   </nav>
 
   <div class="container row">
-  <?php echo "<h1>".$message."</h1>";
+  <?php echo "<h1>".$message."</h1>";?>
     <?php mysqli_close($link); ?>
   </div>
 </body>
