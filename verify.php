@@ -26,7 +26,6 @@ if(isset($_GET['email']) && !empty($_GET['email']) &&  isset($_GET['hash']) && !
   } else {
     $message = "Second Query messed up";
   }
-  $message = "First Query messed up";
 } else {
   $message = "Link is messed up";
 }
@@ -49,7 +48,6 @@ if(isset($_GET['email']) && !empty($_GET['email']) &&  isset($_GET['hash']) && !
   <nav class="lighten-1" role="navigation">
     <div class="container">
       <div class="nav-wrapper">
-        <a id="logo-container" href="<?php echo 'displayUser.php?user_id=' . $_SESSION['user_key'] ?>" class="brand-logo">Welcome "<?php echo $_SESSION['user_id'];?>!"</a>
           <form class="right" id="searchform" method="post">
             <input type="text" name="search_query" id="search_query" size="24" placeholder="Who are you looking for?"/>
           </form>
@@ -72,8 +70,8 @@ if(isset($_GET['email']) && !empty($_GET['email']) &&  isset($_GET['hash']) && !
   </nav>
 
   <div class="container row">
-  <?php echo "<h1>".$message."</h1>";?>
-    <?php mysqli_close($link); ?>
+  <?php echo "<h1>".$message."</h1>";
+        echo "<p>".$email."</p>";
   </div>
 </body>
 </html>
