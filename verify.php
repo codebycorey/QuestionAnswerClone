@@ -71,7 +71,7 @@ if(isset($_GET['email']) && !empty($_GET['email']) &&  isset($_GET['hash']) && !
 
   <div class="container row">
   <?php echo "<h1>".$message."</h1>";
-        echo "<p>".$email."</p>";
+        echo "<p>".$email."</p>";?>
   </div>
 </body>
 </html>
