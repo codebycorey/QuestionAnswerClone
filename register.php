@@ -5,27 +5,64 @@ include('config.php');
 $link = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME)  or
   die('There was a problem connecting to the database');
 
-function insert_New_User($link, $username, $password) {
-    $query = mysqli_query($link ,"
-      INSERT INTO user (username, password)
-      VALUES ('{$username}', '{$password}')");
-    return true;
+function send_email($username, $email, $hash) {
+  $postQueryParameters =
+    http_build_query(array(
+      "from" => 'Mailgun Sandbox <mailgun@sandbox4a441c68b0d149a98588d0144cce5371.mailgun.org>', // Get and use your own
+      "to"  => $email,
+      "subject" => "Verification for Question Answer",
+      "text" => "Please click this link to activate your account:
+http://wsdl-docker.cs.odu.edu:60332/verify.php?email=$email&hash=$hash"
+    ));
+  $username = "api";
+  $password = "key-de38703ac31e847db11023898d64b8ff"; // Get and use your own
+
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, "https://api.mailgun.net/v3/sandbox4a441c68b0d149a98588d0144cce5371.mailgun.org/messages");  // Get and use your own
+  curl_setopt($ch, CURLOPT_POST, 1);
+  curl_setopt($ch, CURLOPT_USERPWD, $username.":".$password);
+  curl_setopt($ch, CURLOPT_POSTFIELDS,$postQueryParameters);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  $output = curl_exec ($ch);
+  if($output != false){
+    curl_close ($ch);
+    return $output;
+  }else {
+    $output = curl_error($ch);
+    curl_close ($ch);
+    return $output;
+  }
 }
 
-function user_Inserted($link, $username, $password) {
-  $no_error = insert_New_User($link, $username, $password);
+function insert_New_User($link, $username, $email, $password, $hash) {
+    $query = mysqli_query($link ,"
+      INSERT INTO user (username, email, password, hash)
+      VALUES ('{$username}', '{$email}', '{$password}', '{$hash}')");
+    return $query;
+}
+
+function user_Inserted($link, $username, $email, $password, $hash) {
+  $no_error = insert_New_User($link, $username, $email, $password, $hash);
 
   if($no_error) {
-    return "User Successfully added.";
+    $no_error = send_email($username, $email, $hash);
+    if($no_error) {
+      return "User Successfully added.";
+    } else return $no_error;
   } else return "Username already taken, please use another";
 }
 
 // Did the user enter a username/password and click submit?
 if($_POST && !empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['password2'])) {
-  if($_POST['password'] == $_POST['password2']) {
-    $response = user_Inserted($link, $_POST['username'], $_POST['password']);
+  if($_POST['email'] === $_POST['email2']) {
+    if($_POST['password'] === $_POST['password2']) {
+      $hash = md5(rand(0,1000));
+      $response = user_Inserted($link, $_POST['username'], $_POST['email'], $_POST['password'], $hash);
+    } else {
+      $response = "Your passwords do not match";
+    }
   } else {
-    $response = "Your passwords do not match";
+    $response = "Your emails do not match";
   }
 } else {
   $response = "Please make sure all field are filled out";
@@ -65,9 +102,15 @@ if($_POST && !empty($_POST['username']) && !empty($_POST['password']) && !empty(
   </nav>
     <div class="container">
     <h1>Please create a User Account to access the rest of the website</h1>
-      <form method="post" action="<?=$_SERVER['PHP_SELF'];?>">
+      <form method="post">
         <div>
-          <input type="text" name="username" value="" id="username" placeholder="Username">
+          <input type="text" name="username" value="<?php if(isset($_POST['username'])) {echo $_POST['username'];}?>" id="username" placeholder="Username">
+        </div>
+        <div>
+          <input type="email" name="email" value="<?php if(isset($_POST['email'])) {echo $_POST['email'];}?>" id="email" placeholder="Email">
+        </div>
+        <div>
+          <input type="email" name="email2" value="" id="email2" placeholder="Retype Email">
         </div>
         <div>
           <input type="password" name="password" value="" id="password" placeholder="Password">
