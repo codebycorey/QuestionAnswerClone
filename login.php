@@ -134,6 +134,7 @@ if(isset($_GET['status']) && $_GET['status'] == 'loggedout') {
 
 if($_POST && isset($_POST['github'])) {
   signup_github();
+  echo "test1";
 }
 
 // Did the user enter a username/password and click submit?
