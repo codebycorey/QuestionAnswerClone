@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 29, 2015 at 05:26 AM
+-- Generation Time: May 01, 2015 at 03:22 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -104,7 +104,9 @@ INSERT INTO `posttags` (`postid`, `tagid`) VALUES
 (3, 3),
 (3, 4),
 (3, 5),
-(25, 1);
+(25, 1),
+(26, 15),
+(27, 16);
 
 -- --------------------------------------------------------
 
@@ -125,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `question` (
   `creationdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `freeze` int(1) NOT NULL,
   `removed` int(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `question`
@@ -150,7 +152,9 @@ INSERT INTO `question` (`id`, `title`, `body`, `ownerid`, `correctanswer`, `scor
 (22, 'test tags2', 'testing the tags again', 4, 0, 0, 0, 0, 0, '2015-04-05 04:36:14', 0, 0),
 (23, 'test tags2', 'testing the tags again', 4, 0, 0, 0, 0, 0, '2015-04-05 04:37:16', 0, 0),
 (24, 'testing tags3', 'test', 4, 0, 0, 0, 0, 0, '2015-04-05 04:37:38', 0, 0),
-(25, 'testing tags3', 'test', 4, 0, 0, 0, 0, 0, '2015-04-05 04:38:14', 0, 0);
+(25, 'testing tags3', 'test', 4, 0, 0, 0, 0, 0, '2015-04-05 04:38:14', 0, 0),
+(26, 'Sdfgaasdfg', 'asdfasdf', 4, 0, 0, 0, 0, 0, '2015-05-01 00:36:31', 0, 0),
+(27, 'asdf', 'asdfasdf', 33, 0, 0, 0, 0, 0, '2015-05-01 00:38:57', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -161,13 +165,15 @@ INSERT INTO `question` (`id`, `title`, `body`, `ownerid`, `correctanswer`, `scor
 CREATE TABLE IF NOT EXISTS `tags` (
 `id` int(11) NOT NULL,
   `tagname` varchar(24) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tags`
 --
 
 INSERT INTO `tags` (`id`, `tagname`) VALUES
+(16, 'asdf'),
+(15, 'sda'),
 (1, 'tag1'),
 (2, 'tag2'),
 (3, 'tag3'),
@@ -191,33 +197,36 @@ CREATE TABLE IF NOT EXISTS `user` (
   `displayname` varchar(24) NOT NULL,
   `aboutme` varchar(280) NOT NULL,
   `creationdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `avatar_type` int(1) NOT NULL,
   `avatar_id` int(11) NOT NULL,
   `hash` varchar(32) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `password`, `email`, `verified`, `admin`, `displayname`, `aboutme`, `creationdate`, `avatar_id`, `hash`) VALUES
-(2, 'pallen', 'm$ftw', '', b'0', 0, '', '', '2015-02-09 02:46:10', 0, ''),
-(3, 'tblee', '0mGth3WeB!', '', b'0', 0, '', '', '2015-02-09 02:46:10', 8, ''),
-(4, 'bourne', 'bash_$', '', b'0', 1, '', '', '2015-02-09 02:46:10', 11, ''),
-(5, 'edsger', 'st1ll1l11lG0O2', '', b'0', 0, '', '', '2015-02-09 02:46:10', 0, ''),
-(6, 'wgates', '5il3M4X_m$4L', '', b'0', 0, '', '', '2015-02-09 02:46:10', 0, ''),
-(7, 'hopper', 'im4usn', '', b'0', 0, '', '', '2015-02-09 02:46:10', 0, ''),
-(8, 'dknuth', 'tek!tex', '', b'0', 0, '', '', '2015-02-09 02:46:10', 0, ''),
-(9, 'ada', 'wtf15b4b', '', b'0', 0, '', '', '2015-02-09 02:46:10', 0, ''),
-(10, 'cmoore', 'moreM00R3!', '', b'0', 0, '', '', '2015-02-09 02:46:10', 0, ''),
-(11, 'jresig', 'In0JS', '', b'0', 0, '', '', '2015-02-09 02:46:10', 0, ''),
-(12, 'atanen', 'minix!minix', '', b'0', 0, '', '', '2015-02-09 02:46:10', 0, ''),
-(13, 'linus', 'ilUvP3nGu1n5', '', b'0', 0, '', '', '2015-02-09 02:46:10', 0, ''),
-(14, 'aturing', '1nfin1t3TAp3', '', b'0', 0, '', '', '2015-02-09 02:46:10', 0, ''),
-(15, 'lwall', 'oysters&camels', '', b'0', 0, '', '', '2015-02-09 02:46:10', 0, ''),
-(16, 'thewoz', '4daK1d5', '', b'0', 0, '', '', '2015-02-09 02:46:10', 0, ''),
-(21, 'username', 'asdf', '', b'0', 0, '', '', '2015-03-12 04:12:30', 0, ''),
-(25, 'rcodonnell', 'asdf', '', b'0', 0, '', '', '2015-03-16 04:29:19', 0, ''),
-(32, 'homeemailtest', 'asdf', 'lzmeelrw@sharklasers.com', b'0', 0, '', '', '2015-04-29 02:55:58', 0, '2838023a778dfaecdc212708f721b788');
+INSERT INTO `user` (`id`, `username`, `password`, `email`, `verified`, `admin`, `displayname`, `aboutme`, `creationdate`, `avatar_type`, `avatar_id`, `hash`) VALUES
+(2, 'pallen', 'm$ftw', '', b'0', 0, '', '', '2015-02-09 02:46:10', 0, 0, ''),
+(3, 'tblee', '0mGth3WeB!', '', b'0', 0, '', '', '2015-02-09 02:46:10', 0, 8, ''),
+(4, 'bourne', 'bash_$', '', b'0', 1, '', '', '2015-02-09 02:46:10', 0, 11, ''),
+(5, 'edsger', 'st1ll1l11lG0O2', '', b'0', 0, '', '', '2015-02-09 02:46:10', 0, 0, ''),
+(6, 'wgates', '5il3M4X_m$4L', '', b'0', 0, '', '', '2015-02-09 02:46:10', 0, 0, ''),
+(7, 'hopper', 'im4usn', '', b'0', 0, '', '', '2015-02-09 02:46:10', 0, 0, ''),
+(8, 'dknuth', 'tek!tex', '', b'0', 0, '', '', '2015-02-09 02:46:10', 0, 0, ''),
+(9, 'ada', 'wtf15b4b', '', b'0', 0, '', '', '2015-02-09 02:46:10', 0, 0, ''),
+(10, 'cmoore', 'moreM00R3!', '', b'0', 0, '', '', '2015-02-09 02:46:10', 0, 0, ''),
+(11, 'jresig', 'In0JS', '', b'0', 0, '', '', '2015-02-09 02:46:10', 0, 0, ''),
+(12, 'atanen', 'minix!minix', '', b'0', 0, '', '', '2015-02-09 02:46:10', 0, 0, ''),
+(13, 'linus', 'ilUvP3nGu1n5', '', b'0', 0, '', '', '2015-02-09 02:46:10', 0, 0, ''),
+(14, 'aturing', '1nfin1t3TAp3', '', b'0', 0, '', '', '2015-02-09 02:46:10', 0, 0, ''),
+(15, 'lwall', 'oysters&camels', '', b'0', 0, '', '', '2015-02-09 02:46:10', 0, 0, ''),
+(16, 'thewoz', '4daK1d5', '', b'0', 0, '', '', '2015-02-09 02:46:10', 0, 0, ''),
+(21, 'username', 'asdf', '', b'0', 0, '', '', '2015-03-12 04:12:30', 0, 0, ''),
+(32, 'homeemailtest', 'asdf', 'lzmeelrw@sharklasers.com', b'1', 0, '', '', '2015-04-29 02:55:58', 0, 0, '2838023a778dfaecdc212708f721b788'),
+(33, 'rcodonnell', 'asdf', 'rcoreyodonnell@gmail.com', b'1', 0, '', '', '2015-04-30 23:31:03', 0, 0, 'e44fea3bec53bcea3b7513ccef5857ac'),
+(34, 'aasdf', 'asdf', 'asd@asdf.com', b'0', 0, '', '', '2015-04-30 23:52:08', 0, 0, '0bb4aec1710521c12ee76289d9440817'),
+(49, 'fdas', 'asdf', 'asd@asdf.com', b'0', 0, '', '', '2015-05-01 00:11:11', 1, 0, '3988c7f88ebcb58c6ce932b957b6f332');
 
 --
 -- Indexes for dumped tables
@@ -271,17 +280,17 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 -- AUTO_INCREMENT for table `question`
 --
 ALTER TABLE `question`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=26;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT for table `tags`
 --
 ALTER TABLE `tags`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=33;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=50;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
