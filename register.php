@@ -34,15 +34,15 @@ http://wsdl-docker.cs.odu.edu:60332/verify.php?email=$email&hash=$hash"
   }
 }
 
-function insert_New_User($link, $username, $email, $password, $hash) {
+function insert_New_User($link, $username, $email, $password, $avatar, $hash) {
     $query = mysqli_query($link ,"
-      INSERT INTO user (username, email, password, hash)
-      VALUES ('{$username}', '{$email}', '{$password}', '{$hash}')");
+      INSERT INTO user (username, email, password, avatar_type, hash)
+      VALUES ('{$username}', '{$email}', '{$password}', '{$avatar}', '{$hash}')");
     return $query;
 }
 
-function user_Inserted($link, $username, $email, $password, $hash) {
-  $no_error = insert_New_User($link, $username, $email, $password, $hash);
+function user_Inserted($link, $username, $email, $password, $avatar, $hash) {
+  $no_error = insert_New_User($link, $username, $email, $password, $avatar, $hash);
 
   if($no_error) {
     $no_error = send_email($username, $email, $hash);
@@ -53,11 +53,11 @@ function user_Inserted($link, $username, $email, $password, $hash) {
 }
 
 // Did the user enter a username/password and click submit?
-if($_POST && !empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['password2'])) {
+if($_POST && !empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['password2']) && !empty($_POST['avatar'])) {
   if($_POST['email'] === $_POST['email2']) {
     if($_POST['password'] === $_POST['password2']) {
       $hash = md5(rand(0,1000));
-      $response = user_Inserted($link, $_POST['username'], $_POST['email'], $_POST['password'], $hash);
+      $response = user_Inserted($link, $_POST['username'], $_POST['email'], $_POST['password'], $_POST['avatar'], $hash);
     } else {
       $response = "Your passwords do not match";
     }
@@ -103,6 +103,7 @@ if($_POST && !empty($_POST['username']) && !empty($_POST['password']) && !empty(
     <div class="container">
     <h1>Please create a User Account to access the rest of the website</h1>
       <form method="post">
+        <div class="input_field">
         <div>
           <input type="text" name="username" value="<?php if(isset($_POST['username'])) {echo $_POST['username'];}?>" id="username" placeholder="Username">
         </div>
@@ -118,8 +119,18 @@ if($_POST && !empty($_POST['username']) && !empty($_POST['password']) && !empty(
         <div>
           <input type="password" name="password2" value="" id="password2" placeholder="Retype Password">
         </div>
+        <p>Avatar Type</p>
         <div>
-        <input type="submit" value="Submit">
+          <input type="radio" name="avatar" id="website" value="0">
+          <label for="website">Default</label>
+        </div>
+        <div>
+          <input type="radio" name="avatar" id="gravatar" value="1">
+          <label for="gravatar">Gravatar</label>
+        </div>
+        <div>
+          <input type="submit" value="Submit">
+        </div>
         </div>
       </form>
       <?php if(isset($response)) echo "<h4 class='alert'>" . $response . "</h4>"; ?>

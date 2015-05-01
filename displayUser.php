@@ -7,9 +7,8 @@ $link = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME)  or
 
 $query = mysqli_query($link, "
   SELECT *
-  FROM user,avatar
+  FROM user
   WHERE user.id = '".$_GET['user_id']."'
-  AND user.avatar_id = avatar.id
   LIMIT 1");
 
 $quesquery = mysqli_query($link, "
@@ -27,6 +26,66 @@ $scorequery = mysqli_query($link, "
 while($row = mysqli_fetch_array($scorequery)) {
   $score = $row['totalscore'];
 }
+
+function get_gravatar( $email, $s = 200, $d = 'mm', $r = 'g', $img = false) {
+    $url = 'http://www.gravatar.com/avatar/';
+    $url .= md5( strtolower( trim( $email ) ) );
+    $url .= "?s=$s&d=$d&r=$r";
+    return $url;
+}
+
+function avatar_src($link, $ownerid) {
+  $query = mysqli_query($link, "
+    SELECT email, avatar_type, avatar.filename
+    FROM avatar
+    LEFT JOIN user ON user.avatar_id = avatar.id
+    WHERE user.id = '{$ownerid}' ");
+
+  while($row = mysqli_fetch_array($query)){
+    if($row['avatar_type'] == 0) {
+      $imgname = $row['filename'];
+      $src = "avatars/".$imgname;
+      echo $src;
+    }
+    if($row['avatar_type'] == 1){
+      $src = get_gravatar($row['email']);
+      echo $src;
+    }
+  }
+}
+
+function changeAvatarType($link, $user, $type) {
+  $query = mysqli_query($link, "
+    UPDATE user
+    SET avatar_type = '$type'
+    WHERE id = '$user'");
+}
+
+function deleteAvatar($link, $user) {
+  $query = mysqli_query($link, "
+    UPDATE user
+    SET avatar_type = 0 AND avatar_id = 0
+    WHERE id = '$user'");
+}
+
+if($_POST && isset($_POST['website'])) {
+  $user = $_GET['user_id'];
+  changeAvatarType($link, $user, 0);
+  header("Location: displayUser.php?user_id=$user");
+}
+if($_POST && !empty($_POST['gravatar'])) {
+  $user = $_GET['user_id'];
+  changeAvatarType($link, $user, 1);
+  header("Location: displayUser.php?user_id=$user");
+}
+
+if($_POST && !empty($_POST['remove'])) {
+  $user = $_GET['user_id'];
+  deleteAvatar($link, $user);
+  header("Location: displayUser.php?user_id=$user");
+}
+
+
 ?>
 
 
@@ -74,15 +133,21 @@ while($row = mysqli_fetch_array($scorequery)) {
     <h2>User</h2>
       <?php while($row = mysqli_fetch_array($query)): ?>
       <h4><?php echo $row['username'] . " " . $score; ?></h4>
-      <h4>Avatar</h4><?php $src = "avatars/".$row['filename'];
-      echo "<img src=$src> "?>
+      <h4>Avatar</h4>
+      <img src="<?php avatar_src($link, $_GET['user_id'])?>">
       <?php endwhile?>
     <?php if($_SESSION['user_key'] === $_GET['user_id']): ?>
-      <h4>Upload new avatar</h4>
+      <h4>Change avatar</h4>
+      <form method="post">
+        <input type="submit" name="website" value="Uploaded"/>
+        <input type="submit" name="gravatar" value="Gravatar"/>
+        <input type="submit" name="remove" value="Remove Avatar"/>
+      </form>
+      <br/>
       <form enctype="multipart/form-data" action="fileupload.php" method="post">
-      <input type="hidden" name="MAX_FILE_SIZE" value="30000">
-      File: <input name="userfile" type="file">
-      <input type="submit" value="Upload!">
+        <input type="hidden" name="MAX_FILE_SIZE" value="30000">
+        File: <input name="userfile" type="file">
+        <input type="submit" value="Upload!">
       </form>
     <?php endif; ?>
     <h2>Asked Questions</h2>

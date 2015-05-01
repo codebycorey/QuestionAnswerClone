@@ -54,20 +54,31 @@ function Insert_Answer($ans, $question_id, $link) {
     VALUES ('$question_id', '$ans', '$ownerID')");
 }
 
+function get_gravatar( $email, $s = 200, $d = 'mm', $r = 'g', $img = false) {
+    $url = 'http://www.gravatar.com/avatar/';
+    $url .= md5( strtolower( trim( $email ) ) );
+    $url .= "?s=$s&d=$d&r=$r";
+    return $url;
+}
+
 function avatar_src($link, $ownerid) {
   $query = mysqli_query($link, "
-    SELECT avatar.filename
+    SELECT email, avatar_type, avatar.filename
     FROM avatar
     LEFT JOIN user ON user.avatar_id = avatar.id
     WHERE user.id = '{$ownerid}' ");
 
   while($row = mysqli_fetch_array($query)){
-    $imgname = $row['filename'];
+    if($row['avatar_type'] == 0) {
+      $imgname = $row['filename'];
+      $src = "avatars/".$imgname;
+      echo $src;
+    }
+    if($row['avatar_type'] == 1){
+      $src = get_gravatar($row['email']);
+      echo $src;
+    }
   }
-
-  $src = "avatars/".$imgname;
-  echo $src;
-  return $src;
 }
 
 function find_tags($link, $question_id){
