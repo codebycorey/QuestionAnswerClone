@@ -103,6 +103,7 @@ if($_POST && isset($_POST['formsubmit']) && !empty($_POST['username']) && !empty
         </div>
       </form>
       <a href="githublogin.php">Github Login</a>
+      <br/>
       <a href="register.php">Register</a>
       <?php if(isset($response)) echo "<h4 class='alert'>" . $response . "</h4>"; ?>
     </div>
