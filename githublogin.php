@@ -18,8 +18,8 @@ function signup_login_user($signup_data) {
 
 $clientId = "00927f47bb816f187daf";
 $clientSecret = "4f78fdba28613156c7a76ad1a6de37febb53b9ac";
-//$redirect_url = 'http://wsdl-docker.cs.odu.edu:60332';
-$redirect_url = 'http://localhost/cs418Project/githublogin.php';
+$redirect_url = 'http://wsdl-docker.cs.odu.edu:60332/githublogin.php';
+//$redirect_url = 'http://localhost/cs418Project/githublogin.php';
 
 //get request , either code from github, or login request
 //if($_SERVER['REQUEST_METHOD'] == 'GET') {
