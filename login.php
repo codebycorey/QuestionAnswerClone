@@ -3,78 +3,6 @@ session_start();
 
 include('config.php');
 
-
-function signup_login_user($signup_data) {
-  $length = count($signup_data);
-  for ($i = 0; $i < $length; $i++) {
-    echo $signup_data[$i];
-  }
-}
-
-
-// GITHUB CREDENTIALS for API ACCESS, get these from GitHub
-function signup_github() {
-  $clientId = "00927f47bb816f187daf";
-  $clientSecret = "4f78fdba28613156c7a76ad1a6de37febb53b9ac";
-  $redirect_url = 'http://wsdl-docker.cs.odu.edu:60332';
-
-  echo "test1";
-  //get request , either code from github, or login request
- // if($_SERVER['REQUEST_METHOD'] == 'GET') {
-    echo "test2";
-    //authorised at github
-    if(isset($_GET['code'])) {
-      $code = $_GET['code'];
-
-      //perform post request now
-      $post = http_build_query(array(
-        'client_id' => $client_id ,
-        'redirect_uri' => $redirect_url ,
-        'client_secret' => $clientSecret,
-        'code' => $code ,
-      ));
-
-      $context = stream_context_create(array("http" => array(
-        "method" => "POST",
-        "header" => "Content-Type: application/x-www-form-urlencodedrn" .
-        "Content-Length: ". strlen($post) . "rn".
-        "Accept: application/json" ,
-        "content" => $post,
-      )));
-
-      $json_data = file_get_contents("https://github.com/login/oauth/access_token", false, $context);
-
-      $r = json_decode($json_data , true);
-
-      $access_token = $r['access_token'];
-
-      $url = "https://api.github.com/user?access_token=$access_token";
-
-      $data =  file_get_contents($url);
-
-      //echo $data;
-      $user_data  = json_decode($data , true);
-      $username = $user_data['login'];
-
-
-      $emails =  file_get_contents("https://api.github.com/user/emails?access_token=$access_token");
-      $emails = json_decode($emails , true);
-      $email = $emails[0];
-
-      $signup_data = array(
-        'username' => $username ,
-        'email' => $email ,
-        'source' => 'github' ,
-       );
-
-      signup_login_user($signup_data);
-      } else {
-      $url = "https://github.com/login/oauth/authorize?client_id=$clientId&redirect_uri=$redirect_url&scope=user";
-      header("Location: $url");
-    }
- // }
-}
-
 function verify_Username_and_Pass($un, $pwd) {
 
   $link = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME)
@@ -134,7 +62,7 @@ if(isset($_GET['status']) && $_GET['status'] == 'loggedout') {
 
 if($_POST && isset($_POST['github'])) {
   signup_github();
-  echo "test1";
+  echo "test2";
 }
 
 // Did the user enter a username/password and click submit?
@@ -172,9 +100,9 @@ if($_POST && isset($_POST['formsubmit']) && !empty($_POST['username']) && !empty
         </div>
         <div>
         <input type="submit" name="formsubmit" value="Submit">
-        <input type="submit" name="github" value="Github">
         </div>
       </form>
+      <a href="githublogin.php">Github Login</a>
       <a href="register.php">Register</a>
       <?php if(isset($response)) echo "<h4 class='alert'>" . $response . "</h4>"; ?>
     </div>

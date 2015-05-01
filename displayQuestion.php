@@ -31,6 +31,18 @@ function retrieve_Username($link, $id) {
   return $user;
 }
 
+function check_Verified($link, $id) {
+  $userquery = mysqli_query($link, "
+    SELECT verified
+    FROM user
+    WHERE id = '{$id}'
+    LIMIT 1");
+  while($row = mysqli_fetch_array($userquery)) {
+    $user = $row['verified'];
+  }
+  return $user;
+}
+
 function retrieve_Userscore($link, $id) {
   $scorequery = mysqli_query($link, "
     select sum(score) totalscore
@@ -220,13 +232,17 @@ if($_POST && isset($_POST['subedit']) &&!empty($_POST['editbody'])) {
                  echo "<a href=$url>$username</a> " ;
                  echo retrieve_Userscore($link, $row['ownerid']);?></p>
         <img class="avatar" src="<?php avatar_src($link, $row['ownerid']);?>">
-        <div class="vote" data-action="up" title="Vote up">
-          <i class="fa fa-chevron-up"></i>
-        </div><!--vote up-->
-        <div class="vote-score"><?php echo $row['score'] ?></div>
-        <div class="vote" data-action="down" title="Vote down">
-          <i class="fa fa-chevron-down"></i>
-        </div><!--vote down-->
+        <?php if(check_Verified($link, $_SESSION['user_key']) == 1) {
+        echo '<div class="vote" data-action="up" title="Vote up">';
+        echo   '<i class="fa fa-chevron-up"></i>';
+        echo '</div><!--vote up-->';
+        echo '<div class="vote-score">'.$row['score'].'</div>';
+        echo '<div class="vote" data-action="down" title="Vote down">';
+        echo '<i class="fa fa-chevron-down"></i>';
+        echo '</div><!--vote down-->';
+        } else {
+        echo '<div class="vote-score">'.$row['score'].'</div>';
+        }?>
       </div>
 
       <div class="col s12 m10 post"><!-- post data -->
@@ -280,13 +296,17 @@ if($_POST && isset($_POST['subedit']) &&!empty($_POST['editbody'])) {
                  echo "<a href=$url>$username</a> " ;
                  echo retrieve_Userscore($link, $row['ownerid']);?></p>
         <img class="avatar" src="<?php avatar_src($link, $row['ownerid']);?>">
-        <div class="vote" data-action="up" title="Vote up">
-          <i class="fa fa-chevron-up"></i>
-        </div><!--vote up-->
-        <div class="vote-score"><?php echo $row['score'] ?></div>
-        <div class="vote" data-action="down" title="Vote down">
-          <i class="fa fa-chevron-down"></i>
-        </div><!--vote down-->
+        <?php if(check_Verified($link, $_SESSION['user_key']) == 1) {
+        echo '<div class="vote" data-action="up" title="Vote up">';
+        echo   '<i class="fa fa-chevron-up"></i>';
+        echo '</div><!--vote up-->';
+        echo '<div class="vote-score">'.$row['score'].'</div>';
+        echo '<div class="vote" data-action="down" title="Vote down">';
+        echo '<i class="fa fa-chevron-down"></i>';
+        echo '</div><!--vote down-->';
+        } else {
+        echo '<div class="vote-score">'.$row['score'].'</div>';
+        }?>
         <?php if($freeze == 0): ?>
         <div class="vote" data-action="accept" title="Accept Answer">
           <i class="fa fa-check"></i>
