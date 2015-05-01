@@ -64,7 +64,7 @@ function changeAvatarType($link, $user, $type) {
 function deleteAvatar($link, $user) {
   $query = mysqli_query($link, "
     UPDATE user
-    SET avatar_type = 0 AND avatar_id = 0
+    SET avatar_type = 0, avatar_id = 0
     WHERE id = '$user'");
 }
 
