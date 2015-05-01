@@ -25,25 +25,31 @@ $redirect_url = 'http://wsdl-docker.cs.odu.edu:60332/githublogin.php';
 //if($_SERVER['REQUEST_METHOD'] == 'GET') {
 //authorised at github
 if(isset($_GET['code'])) {
-  $code = $_GET['code'];
+  $ch = curl_init();
 
-  //perform post request now
-  $post = http_build_query(array(
-    'client_id' => $clientId ,
-    'redirect_uri' => $redirect_url ,
-    'client_secret' => $clientSecret,
-    'code' => $code ,
-  ));
+  curl_setopt($ch, CURLOPT_URL,"https://github.com/login/oauth/access_token");
+  curl_setopt($ch, CURLOPT_POST, 1);
+  curl_setopt($ch, CURLOPT_POSTFIELDS,
+    http_build_query(array(
+      'code' => $_GET['code'],
+      'client_id' => $clientId,
+      'client_secret' => $clientSecret
+    ))
+  );
+  curl_setopt($ch, CURLOPT_HTTPHEADER,array("Accept: application/json"));
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  $server_output = curl_exec ($ch);
+  curl_close ($ch);
 
-  $context = stream_context_create(array("http" => array(
-    "method" => "POST",
-    "header" => "Content-Type: application/x-www-form-urlencodedrn" .
-    "Content-Length: ". strlen($post) . "rn".
-    "Accept: application/json" ,
-    "content" => $post,
-  )));
+  $json = json_decode($server_output,true);
 
-  $json_data = file_get_contents("https://github.com/login/oauth/access_token", false, $context);
+  if( !$json ||
+    !isset($json['access_token']) ||
+    strpos($json['access_token'],' ') !== FALSE){echo "Bad access token. <a href='$ROOTURI'>Reload the page.</a> Try again.";die();}
+
+  $accessToken = json_decode($server_output,true)["access_token"];
+
+/*  $json_data = file_get_contents("https://github.com/login/oauth/access_token", false, $context);
 
   $r = json_decode($json_data , true);
 
@@ -68,7 +74,7 @@ if(isset($_GET['code'])) {
     'source' => 'github' ,
   );
 
-  signup_login_user($signup_data);
+  signup_login_user($signup_data);*/
 } else {
   $url = "https://github.com/login/oauth/authorize?client_id=$clientId&redirect_uri=$redirect_url&scope=user";
   header("Location: $url");
